@@ -1,0 +1,9 @@
+<!-- app/views/tasks/new.html.erb -->
+
+<h1>	New Task Page</h1>
+
+<!-- タイトルのフォームラベル作成 -->
+<%= render 'form', task: @task %>
+
+<!-- タスク一覧画面に戻るリンク作成する -->
+<td><%= link_to 'Back', tasks_path, id:'back'%></td>

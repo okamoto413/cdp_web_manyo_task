@@ -1,0 +1,23 @@
+<!-- app/views/tasks/_form.html.erb -->
+
+<%= form_with(model: task, local: true) do |form| %>
+
+  <div class="field">
+   <p><%= form.label :title %></p>
+    <%= form.text_field :title %>
+  </div>
+
+  <div class="field">
+   <p><%= form.label :content %></p>
+    <%= form.text_area :content %>
+  </div>
+  
+
+   <%if task.new_record? %>
+   <%= form.submit'Create Task', id:'create-task' %>
+   <% else %>
+   <%= form.submit'Update Task', id:'update-task' %>
+   <% end %>
+
+<% end %>
+
