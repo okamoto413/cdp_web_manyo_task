@@ -56,4 +56,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 #rspec-rails追加
 group :development, :test do
   gem 'rspec-rails'
+  gem 'rexml'
 end

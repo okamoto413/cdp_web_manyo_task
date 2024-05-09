@@ -19,5 +19,19 @@
    <%= form.submit'Update Task', id:'update-task' %>
    <% end %>
 
+<% if @task.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@task.errors.count, "error") %>が原因でこの記事を保存できませんでした</h2>
+  
+    # バリデーションに失敗した場合、タイトルが未入力の場合	"Title can’t be blank"とバリデーションメッセージを表示させる。
+    # バリデーションに失敗した場合、内容が未入力の場合	"Content can’t be blank"とバリデーションメッセージを表示させる。
+    <ul>
+      <% @task.errors.each do |error| %>
+        <li><%= error.full_message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
 <% end %>
 
