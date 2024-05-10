@@ -1,0 +1,26 @@
+<!-- app/views/tasks/show.html.erb -->
+
+<h1>Show Task Page</h1>
+
+ <table>
+  <thead>
+    <tr>
+      <th>Title:</th>
+      <td><%= @task.title %></td>
+    </tr>
+    <tr>  
+      <th>Content:</th>
+      <td><%= @task.content %></td>
+    </tr>  
+    <tr>
+      <th>Created_at:</th>
+      <td><%= @task.created_at %></td>
+    </tr>
+  </thead>
+  </table>
+
+  <%= link_to 'Edit', edit_task_path(@task.id), id:'edit-task' %> |
+  <%= link_to 'Back', tasks_path, id:'back'%>
+
+
+

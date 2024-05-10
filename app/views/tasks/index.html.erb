@@ -1,0 +1,28 @@
+<!-- app/views/tasks/index.html.erb -->
+
+<h1>Tasks Index Page</h1>
+
+ <table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Content</th>
+      <th>Created_at</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @tasks.each do |task| %>
+      <tr>
+        <td><%= task.title %></td>
+        <td><%= task.content %></td>
+        <td><%= task.created_at %></td>
+        <td><%= link_to 'Show', task_path(task.id), class:'show-task'%></td>
+        <td> <%= link_to 'Edit', edit_task_path(task.id), class:'edit-task' %></td>
+        <td><%= link_to 'Destroy', task_path(task.id), method: 'delete', data: { confirm: 'Are you sure?' } , class:'destroy-task'%></td>
+      </tr>
+        <% end %>
+  </tbody>
+</table>
+
