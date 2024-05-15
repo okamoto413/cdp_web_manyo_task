@@ -13,9 +13,10 @@
 
   <!-- グローバルナビゲーションの作成 -->
   <!-- コンテンツの主要なナビゲーション部分を識別するため<nav>を使用する -->
+  <!-- アプリの国際化の設定 -->
  <nav> 
-<li> <%= link_to 'Tasks Index', tasks_path, id:'tasks-index' %> </li>
-<li><%= link_to 'New Task', new_task_path, id:'new-task' %></li>
+<li> <%= link_to t("global_navigation.tasks_index_link"), tasks_path, id:'tasks-index' %> </li>
+<li><%= link_to t("global_navigation.new-task"), new_task_path, id:'new-task' %></li>
  </nav>
 
     <% flash.each do |message_type, message| %>

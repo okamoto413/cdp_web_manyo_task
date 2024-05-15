@@ -3,28 +3,27 @@
 <%= form_with(model: task, local: true) do |form| %>
 
   <div class="field">
-   <p><%= form.label :title %></p>
+   <p><%= form.label :title, t("new_task.form_labels.title") %></p>
     <%= form.text_field :title %>
   </div>
 
   <div class="field">
-   <p><%= form.label :content %></p>
+   <p><%= form.label :content, t("new_task.form_labels.content") %></p>
     <%= form.text_area :content %>
   </div>
   
-
+<!-- アプリケーションの国際化 -->
    <%if task.new_record? %>
-   <%= form.submit'Create Task', id:'create-task' %>
+   <%= form.submit t("new_task.create_button"), id:'create-task' %>
    <% else %>
-   <%= form.submit'Update Task', id:'update-task' %>
+   <%= form.submit t("edit_task.update_button"), id:'update-task' %>
    <% end %>
-
+ </div>
+ 
 <% if @task.errors.any? %>
   <div id="error_explanation">
     <h2><%= pluralize(@task.errors.count, "error") %>が原因でこの記事を保存できませんでした</h2>
   
-    # バリデーションに失敗した場合、タイトルが未入力の場合	"Title can’t be blank"とバリデーションメッセージを表示させる。
-    # バリデーションに失敗した場合、内容が未入力の場合	"Content can’t be blank"とバリデーションメッセージを表示させる。
     <ul>
       <% @task.errors.each do |error| %>
         <li><%= error.full_message %></li>

@@ -59,3 +59,6 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'rexml'
 end
+
+#Railsのi18n　国際化
+gem 'rails-i18n'

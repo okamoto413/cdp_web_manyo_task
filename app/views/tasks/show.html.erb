@@ -1,26 +1,23 @@
 <!-- app/views/tasks/show.html.erb -->
 
-<h1>Show Task Page</h1>
+<h1><%= t("show_task.page_title")%></h1>
 
  <table>
   <thead>
     <tr>
-      <th>Title:</th>
+      <th><%= t("show_task.item_labels.title")%></th>
       <td><%= @task.title %></td>
     </tr>
-    <tr>  
-      <th>Content:</th>
-      <td><%= @task.content %></td>
-    </tr>  
     <tr>
-      <th>Created_at:</th>
+      <th><%= t("show_task.item_labels.content") %></th>
+      <td><%= @task.content %></td>
+    </tr>
+    <tr>
+      <th><%= t("show_task.item_labels.created_at") %></th>
       <td><%= @task.created_at %></td>
     </tr>
   </thead>
-  </table>
+ </table>
 
-  <%= link_to 'Edit', edit_task_path(@task.id), id:'edit-task' %> |
-  <%= link_to 'Back', tasks_path, id:'back'%>
-
-
-
+  <%= link_to t("show_task.edit_link"), edit_task_path(@task.id), id:'edit-task' %> |
+  <%= link_to t("show_task.back_to_tasks_index_link"), tasks_path, id:'back'%>
