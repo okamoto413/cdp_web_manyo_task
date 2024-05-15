@@ -23,5 +23,21 @@ RSpec.describe 'タスクモデル機能', type: :model do
         expect(task).to be_valid        
       end
     end
+
+
+
+RSpec.describe 'タスク管理機能', type: :system do
+  describe '一覧表示機能' do
+    before do
+      task1 = FactoryBot.create(title: '最初のタスク', content: '最初のタスク説明', created_at: 1.day.ago)
+      task2 = FactoryBot.create(title: '2番目のタスク', content: '2番目のタスク説明', created_at:1.hour.ago)
+      visit tasks_path
+    end
+
+    it 'タスクが作成日時の降順に表示される' do
+      visit tasks_pat
+      task_taitles=all('.task_title').map(&:text)
+        expect(page.text).to eq [@task2.title, @task1.title]
+      end
   end
 end
