@@ -5,3 +5,11 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+#seedデータを使って、50件分のタスクデータを投入できるようにする
+50.times do |i|
+   Task.create!(
+    title: "Task#{i+1}",
+    content: "Task#{i+1}"
+    )
+end
