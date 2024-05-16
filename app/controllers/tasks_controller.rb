@@ -2,6 +2,8 @@ class TasksController < ApplicationController
 
   def index
     @tasks = Task.all
+    # ページネーション：タスク一覧画面にページネーションを実装し、1ページあたり10件のタスクを表示させる
+   @tasks = Task.page(params[:page]).per(10)
     @task_model_name = t("activerecord.models.task")
     @task_title_attribute = t("activerecord.attributes.task.title")
   end

@@ -62,3 +62,6 @@ end
 
 #Railsのi18n　国際化
 gem 'rails-i18n'
+
+#kaminari 追加：ページネーションを実装
+gem 'kaminari'
