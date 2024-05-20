@@ -2,6 +2,10 @@ class TasksController < ApplicationController
 
   def index
     @tasks = Task.all
+    # ページネーション：タスク一覧画面にページネーションを実装し、1ページあたり10件のタスクを表示させる
+   @tasks = Task.page(params[:page]).per(10)
+    @task_model_name = t("activerecord.models.task")
+    @task_title_attribute = t("activerecord.attributes.task.title")
   end
 
   def show
@@ -20,7 +24,7 @@ class TasksController < ApplicationController
     @task = Task.new(task_params)
     if @task.save 
       #タスクの登録に成功した場合	Task was successfully created.のフラッシュメッセージを表示させる     
-      flash[:notice]= 'Task was successfully created.' 
+      flash[:notice]= t("flash_messages.task_created")
       #登録された場合、タスク一覧画面へ遷移する
       redirect_to tasks_path(@task)
     else
@@ -33,7 +37,7 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
     if @task.update(task_params)
       #タスクの更新に成功した場合	Task was successfully updated.のフラッシュメッセージを表示させる。
-      flash[:notice]= 'Task was successfully updated.'
+      flash[:notice]= t("flash_messages.task_updated")
       #タスク詳細画面へ遷移。
       redirect_to task_path(params[:id])
     else
@@ -45,7 +49,7 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
     @task.destroy
     #タスクを削除した場合	Task was successfully destroyed.のフラッシュメッセージを表示させる。
-    flash[:notice]= 'Task was successfully destroyed.'
+    flash[:notice]= t("flash_messages.task_destroyed")
     #削除後、タスク一覧画面へ画面遷移する。
     redirect_to tasks_path
   end  

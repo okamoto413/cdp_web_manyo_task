@@ -1,0 +1,61 @@
+#config/locales/ja.yml
+ja:
+  activerecord:
+    models:
+      task: タスク
+    attributes:
+      task:
+        title: タイトル
+        content: 内容
+
+  global_navigation:    
+    tasks_index_link: "タスク一覧"
+    new-task: "タスクを登録する"
+
+  tasks_index:
+    page_title: "タスク一覧ページ"
+    table_thead:
+      title: "タイトル" 
+      content: "内容"
+      created_at: "作成日時"
+      Show: "詳細"
+      Edit: "編集"
+      Destroy: "削除"
+      delete_confirm: "本当に削除してもよろしいですか？"
+
+  new_task:
+    page_title: "タスク登録ページ" 
+    form_labels: 
+      title: "タイトル"
+      content: "内容"
+    create_button: "登録する"
+    back_to_tasks_index_link: "戻る"
+
+  show_task:
+    page_title: "タスク詳細ページ"
+    item_labels:
+      title: "タイトル"
+      content: "内容"
+      created_at: "作成日時"
+    edit_link: "編集"
+    back_to_tasks_index_link: "戻る"
+
+  edit_task:  
+    page_title: "タスク編集ページ"
+    form_labels: 
+      title: "タイトル"
+      content: "内容"
+    update_button: "更新する"
+    back_to_show_task_link: "戻る"
+   
+  validation_messages:
+    #タイトルが未入力の場合のバリデーションメッセージ
+       title_blank: "タイトルを入力してください"
+      #内容が未入力の場合のバリデーションメッセージ
+       content_blank: "内容を入力してください"
+
+  flash_messages:
+    task_created: "タスクを登録しました"
+    task_updated: "タスクを更新しました"
+    task_destroyed: "タスクを削除しました"
+   
