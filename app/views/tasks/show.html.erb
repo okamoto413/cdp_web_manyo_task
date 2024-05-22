@@ -16,6 +16,19 @@
       <th><%= t("show_task.item_labels.created_at") %></th>
       <td><%= @task.created_at %></td>
     </tr>
+<!-- 終了期限、優先度、ステータス追記 -->
+    <tr>
+      <th><%= t("show_task.item_labels.deadline_on") %></th>
+      <td><%= @task.deadline_on %></td>
+    </tr>
+    <tr>
+      <th><%= t("show_task.item_labels.priority") %></th>
+      <td><%=  t("tasks_index.priorities.#{@task.priority}") %></td>
+    </tr>
+    <tr>
+       <th><%= t("show_task.item_labels.status") %></th>
+      <th><%= t("tasks_index.statuses.#{@task.status}") %></th>
+    </tr>
   </thead>
  </table>
 

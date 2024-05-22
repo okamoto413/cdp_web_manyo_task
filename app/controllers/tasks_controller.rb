@@ -1,11 +1,19 @@
 class TasksController < ApplicationController
-
+ 
   def index
     @tasks = Task.all
     # ページネーション：タスク一覧画面にページネーションを実装し、1ページあたり10件のタスクを表示させる
-   @tasks = Task.page(params[:page]).per(10)
+    @tasks = Task.page(params[:page]).per(10)
     @task_model_name = t("activerecord.models.task")
     @task_title_attribute = t("activerecord.attributes.task.title")
+    # 一覧画面（ログイン中のユーザーのタスクのみ表示する）
+    #@tasks = Task.where(user_id: current_user.id)
+    # 終了期限でのソートと優先度でのソートの条件分岐
+     if params[:sort_deadline_on]
+      @tasks = @tasks.order(deadline_on: :asc)
+     elsif params[:priority]
+      @tasks = @tasks.order(priority: :desc)
+    end
   end
 
   def show
@@ -58,6 +66,6 @@ class TasksController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def task_params
-    params.require(:task).permit(:title, :content)
+    params.require(:task).permit(:title, :content, :deadline_on, :priority, :status,)
   end
 end

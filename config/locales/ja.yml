@@ -7,6 +7,10 @@ ja:
       task:
         title: タイトル
         content: 内容
+        deadline_on: 終了期限
+        priority: 優先度
+        status: ステータス
+
 
   global_navigation:    
     tasks_index_link: "タスク一覧"
@@ -18,16 +22,38 @@ ja:
       title: "タイトル" 
       content: "内容"
       created_at: "作成日時"
+      deadline_on: "終了期限"
+      priority: "優先度"
+      status: "ステータス"
       Show: "詳細"
       Edit: "編集"
       Destroy: "削除"
       delete_confirm: "本当に削除してもよろしいですか？"
+    priorities:
+      low: "低"
+      medium: "中"
+      high: "高"
+    statuses:
+      not_started: "未着手"
+      started: "着手中"
+      completed: "完了"
 
   new_task:
     page_title: "タスク登録ページ" 
     form_labels: 
       title: "タイトル"
       content: "内容"
+      deadline_on: "終了期限"
+      priority: "優先度"
+      status: "ステータス"
+    priorities:
+      low: "低"
+      medium: "中"
+      high: "高"
+    statuses:
+      not_started: "未着手"
+      started: "着手中"
+      completed: "完了"
     create_button: "登録する"
     back_to_tasks_index_link: "戻る"
 
@@ -37,6 +63,17 @@ ja:
       title: "タイトル"
       content: "内容"
       created_at: "作成日時"
+      deadline_on: "終了期限"
+      priority: "優先度"
+      status: "ステータス"
+    priorities:
+      low: "低"
+      medium: "中"
+      high: "高"
+    statuses:
+      not_started: "未着手"
+      started: "着手中"
+      completed: "完了"
     edit_link: "編集"
     back_to_tasks_index_link: "戻る"
 
@@ -50,12 +87,18 @@ ja:
    
   validation_messages:
     #タイトルが未入力の場合のバリデーションメッセージ
-       title_blank: "タイトルを入力してください"
-      #内容が未入力の場合のバリデーションメッセージ
-       content_blank: "内容を入力してください"
+    title_blank: "タイトルを入力してください"
+    #内容が未入力の場合のバリデーションメッセージ
+    content_blank: "内容を入力してください"
+    #終了期限が未入力の場合のバリデーションメッセージ
+    deadline_on_blank: "終了期限を入力してください"
+    #優先度が未入力の場合のバリデーションメッセージ           
+    priority_blank: "優先度を入力してください"
+    #ステータスが未入力の場合のバリデーションメッセージ
+    status_blank: "ステータスを入力してください"
 
   flash_messages:
-    task_created: "タスクを登録しました"
+    task_created: "タスクを登録ました"
     task_updated: "タスクを更新しました"
     task_destroyed: "タスクを削除しました"
-   
+
