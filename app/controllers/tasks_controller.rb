@@ -8,12 +8,15 @@ class TasksController < ApplicationController
     @task_title_attribute = t("activerecord.attributes.task.title")
     # 一覧画面（ログイン中のユーザーのタスクのみ表示する）
     #@tasks = Task.where(user_id: current_user.id)
+    
     # 終了期限でのソートと優先度でのソートの条件分岐
+    # 「優先度」をクリックした際、優先度の高い順にソートし、かつ優先度が同じ場合は作成日時の降順で表示させる
     if params[:sort_deadline_on]
       @tasks = @tasks.order(deadline_on: :asc)
-    elsif params[:priority]
-      @tasks = @tasks.order(priority: :desc)
+    elsif params[:sort_priority]
+      @tasks = @tasks.order(priority: :desc, created_at: :desc)
     end
+
     if params[:search].present?
       search_params = params[:search]
       if search_params[:title].present? && search_params[:status].present?
