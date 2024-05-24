@@ -21,15 +21,15 @@
   <div class="field">
    <p><%= form.label :priority, t("new_task.form_labels.priority") %></p>
     <%= form.select :priority,
-     options_for_select(Task.priorities.keys.map { |k| [t("new_task.priorities.#{k}"), k] }), 
-     {}, { include_blank: true } %>
+     options_for_select([]+Task.priorities.keys.map { |k| [t("new_task.priorities.#{k}"), k] }), 
+      { include_blank: true } %>
   </div>
 
 <!-- ステータス 追記  ステータスの検索フォームのデフォルト値は空欄-->
   <div class="field">
    <p><%= form.label :status, t("new_task.form_labels.status") %></p>
   <%= form.select :status, 
-    options_for_select(Task.statuses.keys.map { |k| [t("new_task.statuses.#{k}"), k] }, { include_blank: true }) %>
+    options_for_select([]+Task.statuses.keys.map { |k| [t("new_task.statuses.#{k}"), k] }), { include_blank: true } %>
   </div>
   
 <!-- アプリケーションの国際化 -->
