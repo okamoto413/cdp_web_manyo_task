@@ -9,10 +9,20 @@ class TasksController < ApplicationController
     # 一覧画面（ログイン中のユーザーのタスクのみ表示する）
     #@tasks = Task.where(user_id: current_user.id)
     # 終了期限でのソートと優先度でのソートの条件分岐
-     if params[:sort_deadline_on]
+    if params[:sort_deadline_on]
       @tasks = @tasks.order(deadline_on: :asc)
-     elsif params[:priority]
+    elsif params[:priority]
       @tasks = @tasks.order(priority: :desc)
+    end
+    if params[:search].present?
+      search_params = params[:search]
+      if search_params[:title].present? && search_params[:status].present?
+        @tasks = @tasks.status(search_params[:status]).tasks_title_like(search_params[:title])
+      elsif search_params[:title].present?  
+        @tasks = @tasks.tasks_title_like(search_params[:title])
+      elsif search_params[:status].present?
+        @tasks = @tasks.status(search_params[:status])  
+      end
     end
   end
 
@@ -67,5 +77,14 @@ class TasksController < ApplicationController
   # Only allow a list of trusted parameters through.
   def task_params
     params.require(:task).permit(:title, :content, :deadline_on, :priority, :status,)
+  end
+
+  def search_tasks(search_params)
+    tasks = Task.all
+    tasks = tasks.where("title LIKE ?", "%#{search_params[:title]}%") if search_params[:title].present?
+    tasks = tasks.where(status: search_params[:status])
+    if search_params[:status].present?
+    tasks
+    end
   end
 end

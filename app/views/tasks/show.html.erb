@@ -3,34 +3,34 @@
 <h1><%= t("show_task.page_title")%></h1>
 
  <table>
-  <thead>
+  <tbody>
     <tr>
-      <th><%= t("show_task.item_labels.title")%></th>
+      <th><%= t("show_task.item_labels.title")%> :</th>
       <td><%= @task.title %></td>
     </tr>
     <tr>
-      <th><%= t("show_task.item_labels.content") %></th>
+      <th><%= t("show_task.item_labels.content") %> :</th>
       <td><%= @task.content %></td>
     </tr>
     <tr>
-      <th><%= t("show_task.item_labels.created_at") %></th>
+      <th><%= t("show_task.item_labels.created_at") %> :</th>
       <td><%= @task.created_at %></td>
     </tr>
 <!-- 終了期限、優先度、ステータス追記 -->
     <tr>
-      <th><%= t("show_task.item_labels.deadline_on") %></th>
+      <th><%= t("show_task.item_labels.deadline_on") %> :</th>
       <td><%= @task.deadline_on %></td>
     </tr>
     <tr>
-      <th><%= t("show_task.item_labels.priority") %></th>
+      <th><%= t("show_task.item_labels.priority") %> :</th>
       <td><%=  t("tasks_index.priorities.#{@task.priority}") %></td>
     </tr>
     <tr>
-       <th><%= t("show_task.item_labels.status") %></th>
-      <th><%= t("tasks_index.statuses.#{@task.status}") %></th>
+      <th><%= t("show_task.item_labels.status") %> :</th>
+      <td><%= t("tasks_index.statuses.#{@task.status}") %></td>
     </tr>
-  </thead>
+  </tbody>
  </table>
 
-  <%= link_to t("show_task.edit_link"), edit_task_path(@task.id), id:'edit-task' %> |
+  <%= link_to t("show_task.edit_link"), edit_task_path(@task.id), id:'edit-task' %> 
   <%= link_to t("show_task.back_to_tasks_index_link"), tasks_path, id:'back'%>
