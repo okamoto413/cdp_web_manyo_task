@@ -9,14 +9,15 @@ class TasksController < ApplicationController
     # 一覧画面（ログイン中のユーザーのタスクのみ表示する）
     #@tasks = Task.where(user_id: current_user.id)
     
-    # 終了期限でのソートと優先度でのソートの条件分岐
     # 「優先度」をクリックした際、優先度の高い順にソートし、かつ優先度が同じ場合は作成日時の降順で表示させる
-   if params[:sort_deadline_on]
-      @tasks = @tasks.order(deadline_on: :asc)
+    if params[:sort_deadline_on]
+      # 終了期限でのソート。終了期限が同じ場合は作成日時で降順にソート
+      @tasks = @tasks.order(deadline_on: :asc, created_at: :desc)
     elsif params[:sort_priority]
+       # 優先度でのソート。優先度が同じ場合は作成日時で降順にソート
       @tasks = @tasks.order(priority: :desc, created_at: :desc)
     end
-
+binding.irb
     if params[:search].present?
       search_params = params[:search]
       if search_params[:title].present? && search_params[:status].present?
