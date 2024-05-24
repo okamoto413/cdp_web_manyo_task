@@ -18,6 +18,7 @@ ja:
 
   tasks_index:
     page_title: "タスク一覧ページ"
+    search_button_text: "検索"
     table_thead:
       title: "タイトル" 
       content: "内容"
