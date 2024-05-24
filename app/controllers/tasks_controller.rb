@@ -17,7 +17,7 @@ class TasksController < ApplicationController
        # 優先度でのソート。優先度が同じ場合は作成日時で降順にソート
       @tasks = @tasks.order(priority: :desc, created_at: :desc)
     end
-binding.irb
+
     if params[:search].present?
       search_params = params[:search]
       if search_params[:title].present? && search_params[:status].present?
