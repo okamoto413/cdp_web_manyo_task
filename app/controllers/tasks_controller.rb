@@ -1,40 +1,46 @@
 class TasksController < ApplicationController
  
   def index
-    @tasks = Task.all
+    @tasks = Task.all.order(created_at: :desc)
+
     # ページネーション：タスク一覧画面にページネーションを実装し、1ページあたり10件のタスクを表示させる
-    @tasks = Task.page(params[:page]).per(10)
     @task_model_name = t("activerecord.models.task")
     @task_title_attribute = t("activerecord.attributes.task.title")
     # 一覧画面（ログイン中のユーザーのタスクのみ表示する）
     #@tasks = Task.where(user_id: current_user.id)
-
+    
     # ソート処理   
     if params[:sort_deadline_on]
-      @tasks = @tasks.sorted_by_deadline
+      @tasks = Task.sorted_by_deadline
     elsif params[:sort_priority]
-      @tasks = @tasks.sorted_by_priority
+      @tasks = Task.sorted_by_priority
     end  
     
+    #新規作成時、作成日時を昇順に表示する
+    # @tasks=Task.all.order(created_at: :desc)
+    
+    
+    
     # 「優先度」をクリックした際、優先度の高い順にソートし、かつ優先度が同じ場合は作成日時の降順で表示させる
-    if params[:sort_deadline_on]
-      # 終了期限でのソート。終了期限が同じ場合は作成日時で降順にソート
-      @tasks = @tasks.order(deadline_on: :asc, created_at: :desc)
-    elsif params[:sort_priority]
-       # 優先度でのソート。優先度が同じ場合は作成日時で降順にソート
-      @tasks = @tasks.order(priority: :desc, created_at: :desc)
-    end
-
+    #     if params[:sort_deadline_on]
+    #       # 終了期限でのソート。終了期限が同じ場合は作成日時で降順にソート
+    #       @tasks = @tasks.order(deadline_on: :asc, created_at: :desc)
+    #     elsif params[:sort_priority]
+    #        # 優先度でのソート。優先度が同じ場合は作成日時で降順にソート
+    #       @tasks = @tasks.order(priority: :desc, created_at: :desc)
+    #     end
+    
     if params[:search].present?
       search_params = params[:search]
       if search_params[:title].present? && search_params[:status].present?
-        @tasks = @tasks.status(search_params[:status]).tasks_title_like(search_params[:title])
+        @tasks = @tasks.search_status(search_params[:status]).search_title_like(search_params[:title])
       elsif search_params[:title].present?  
-        @tasks = @tasks.task_title_like(search_params[:title])
+        @tasks = @tasks.search_title_like(search_params[:title])
       elsif search_params[:status].present?
-        @tasks = @tasks.status(search_params[:status])  
+        @tasks = @tasks.search_status(search_params[:status])  
       end
     end
+    @tasks = @tasks.page(params[:page]).per(10)
   end
 
   def show
