@@ -4,11 +4,11 @@ RSpec.describe 'タスク管理機能', type: :system do
 
   describe '一覧表示機能' do
     # let!を使ってテストデータを変数として定義することで、複数のテストでテストデータを共有できる
+    #new_task追記
+   let!(:new_task) { FactoryBot.create(:task, title: 'new_task', created_at: 1.seconds.ago) } 
    let!(:first_task) { FactoryBot.create(:task, title: 'first_task', content: 'first_task', priority: :high, status: :not_started, created_at: 1.day.ago)}
    let!(:second_task) { FactoryBot.create(:second_task, title: 'second_task',  content: '2番目のタスク説明', status: :started, created_at:1.hour.ago)}
    let!(:third_task) { FactoryBot.create(:third_task, title: 'third_task', content: '3番目のタスク説明', status: :completed, created_at:1.minute.ago)}
-  #new_task追記
-   let!(:new_task) { FactoryBot.create(:task, title: 'new_task') } 
 
    # 「一覧画面に遷移した場合」や「タスクが作成日時の降順に並んでいる場合」など、contextが実行されるタイミングで、before内のコードが実行される
    before do

@@ -6,6 +6,7 @@ FactoryBot.define do
   factory :task do
     title { 'new_task' }
     content { 'タスク内容' }
+    created_at { Time.zone.now }
     deadline_on { '2025-02-10' }
     priority { 2 }
     status { 0 }

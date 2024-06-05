@@ -13,14 +13,14 @@ class TasksController < ApplicationController
     if params[:sort_deadline_on]
       @tasks = Task.sorted_by_deadline
     elsif params[:sort_priority]
-      @tasks = Task.sorted_by_priority
+      # @tasks = Task.sorted_by_priority
+      @tasks =Task.sorted_by_priority.order(priority: :desc, created_at: :desc)
     end  
     
     #テーブルヘッダーの「優先度」をクリックした際、優先度の高い順にソートし、かつ優先度が同じ場合は作成日時の降順で表示させる
-    @tasks=Task.all.order(priority: :desc, created_at: :desc)if params[:sort]== 'priority'
-    
-    
-    
+    # @tasks=Task.all.order(priority: :desc, created_at: :desc) 
+
+   
     # 「優先度」をクリックした際、優先度の高い順にソートし、かつ優先度が同じ場合は作成日時の降順で表示させる
     #     if params[:sort_deadline_on]
     #       # 終了期限でのソート。終了期限が同じ場合は作成日時で降順にソート

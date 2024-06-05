@@ -35,7 +35,8 @@
       <tr>
         <td><%= task.title %></td>
         <td><%= task.content %></td>
-        <td><%= task.created_at %></td>
+        <td><%= task.created_at %>
+        <%= task.created_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
         <td class="task_deadline"><%= task.deadline_on %></td>
         <td class = "task_priority"><%= t("tasks_index.priorities.#{task.priority}") %></td>
         <td><%= t("tasks_index.statuses.#{task.status}") %></td>
