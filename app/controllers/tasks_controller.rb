@@ -16,8 +16,8 @@ class TasksController < ApplicationController
       @tasks = Task.sorted_by_priority
     end  
     
-    #新規作成時、作成日時を昇順に表示する
-    # @tasks=Task.all.order(created_at: :desc)
+    #テーブルヘッダーの「優先度」をクリックした際、優先度の高い順にソートし、かつ優先度が同じ場合は作成日時の降順で表示させる
+    @tasks=Task.all.order(priority: :desc, created_at: :desc)if params[:sort]== 'priority'
     
     
     
