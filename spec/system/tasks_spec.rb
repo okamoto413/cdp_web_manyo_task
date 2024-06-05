@@ -28,15 +28,21 @@ RSpec.describe 'タスク管理機能', type: :system do
           expect(task_list[3]).to have_content 'first_task'
         end
 
+      # it '登録済みのタスク一覧が表示される' do
+      #   # テストで使用するためのタスクを登録
+      #   Task.create!(title: '書類作成', content: '企画書を作成する。', priority: :high, status: :not_started, created_at: 1.day.ago, deadline_on: '2022-02-16 12:00:00 +0900')
+      #   # FactoryBot.create(:task)
+      #   # タスク一覧画面に遷移
+      #   visit tasks_path
+      #   # visit（遷移）したpage（この場合、タスク一覧画面）に"書類作成"という文字列が、have_content（含まれていること）をexpect（確認・期待）する
+      #   expect(page).to have_content '書類作成'
+      #   # expectの結果が「真」であれば成功、「偽」であれば失敗としてテスト結果が出力される
+      # end
       it '登録済みのタスク一覧が表示される' do
-        # テストで使用するためのタスクを登録
-        Task.create!(title: '書類作成', content: '企画書を作成する。', priority: :high, status: :not_started, created_at: 1.day.ago, deadline_on: '2022-02-16 12:00:00 +0900')
-        # FactoryBot.create(:task)
-        # タスク一覧画面に遷移
-        visit tasks_path
-        # visit（遷移）したpage（この場合、タスク一覧画面）に"書類作成"という文字列が、have_content（含まれていること）をexpect（確認・期待）する
-        expect(page).to have_content '書類作成'
-        # expectの結果が「真」であれば成功、「偽」であれば失敗としてテスト結果が出力される
+      expect(page).to have_content 'new_task'
+      expect(page).to have_content 'third_task'
+      expect(page).to have_content 'second_task'
+      expect(page).to have_content 'first_task'
       end
     end
 
@@ -44,7 +50,7 @@ RSpec.describe 'タスク管理機能', type: :system do
   describe 'ソート機能' do
     context '「終了期限」というリンクをクリックした場合' do
       it "終了期限昇順に並び替えられたタスク一覧が表示される" do
-      # allメソッドを使って複数のテストデータの並び順を確認する
+        # allメソッドを使って複数のテストデータの並び順を確認する
         click_link '終了期限'
         save_and_open_page
         task_deadlines = all('.task_deadline').map(&:text)
