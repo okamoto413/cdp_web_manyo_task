@@ -7,9 +7,12 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 #seedデータを使って、50件分のタスクデータを投入できるようにする
-50.times do |i|
-   Task.create!(
+10.times do |i|
+  Task.create!(
     title: "Task#{i+1}",
-    content: "Task#{i+1}"
-    )
+    content: "任意",
+    deadline_on: "2022-02-#{18-(i%10)}",
+    priority: rand(0..2),  # 低, 中, 高のいずれかをランダムに設定
+    status: rand(0..2) # 未着手, 着手中, 完了のいずれかをランダムに設定
+  )
 end

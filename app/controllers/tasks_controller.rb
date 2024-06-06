@@ -1,11 +1,46 @@
 class TasksController < ApplicationController
-
+ 
   def index
-    @tasks = Task.all
+    @tasks = Task.all.order(created_at: :desc)
+
     # ページネーション：タスク一覧画面にページネーションを実装し、1ページあたり10件のタスクを表示させる
-   @tasks = Task.page(params[:page]).per(10)
     @task_model_name = t("activerecord.models.task")
     @task_title_attribute = t("activerecord.attributes.task.title")
+    # 一覧画面（ログイン中のユーザーのタスクのみ表示する）
+    #@tasks = Task.where(user_id: current_user.id)
+    
+    # ソート処理   
+    if params[:sort_deadline_on]
+      @tasks = Task.sorted_by_deadline
+    elsif params[:sort_priority]
+      # @tasks = Task.sorted_by_priority
+      @tasks =Task.sorted_by_priority.order(priority: :desc, created_at: :desc)
+    end  
+    
+    #テーブルヘッダーの「優先度」をクリックした際、優先度の高い順にソートし、かつ優先度が同じ場合は作成日時の降順で表示させる
+    # @tasks=Task.all.order(priority: :desc, created_at: :desc) 
+
+   
+    # 「優先度」をクリックした際、優先度の高い順にソートし、かつ優先度が同じ場合は作成日時の降順で表示させる
+    #     if params[:sort_deadline_on]
+    #       # 終了期限でのソート。終了期限が同じ場合は作成日時で降順にソート
+    #       @tasks = @tasks.order(deadline_on: :asc, created_at: :desc)
+    #     elsif params[:sort_priority]
+    #        # 優先度でのソート。優先度が同じ場合は作成日時で降順にソート
+    #       @tasks = @tasks.order(priority: :desc, created_at: :desc)
+    #     end
+    
+    if params[:search].present?
+      search_params = params[:search]
+      if search_params[:title].present? && search_params[:status].present?
+        @tasks = @tasks.search_status(search_params[:status]).search_title_like(search_params[:title])
+      elsif search_params[:title].present?  
+        @tasks = @tasks.search_title_like(search_params[:title])
+      elsif search_params[:status].present?
+        @tasks = @tasks.search_status(search_params[:status])  
+      end
+    end
+    @tasks = @tasks.page(params[:page]).per(10)
   end
 
   def show
@@ -58,6 +93,15 @@ class TasksController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def task_params
-    params.require(:task).permit(:title, :content)
+    params.require(:task).permit(:title, :content, :deadline_on, :priority, :status,)
+  end
+
+  def search_tasks(search_params)
+    tasks = Task.all
+    tasks = tasks.where("title LIKE ?", "%#{search_params[:title]}%") if search_params[:title].present?
+    tasks = tasks.where(status: search_params[:status])
+    if search_params[:status].present?
+    tasks
+    end
   end
 end
