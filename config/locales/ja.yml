@@ -11,7 +11,6 @@ ja:
         priority: 優先度
         status: ステータス
 
-
   global_navigation:    
     tasks_index_link: "タスク一覧"
     new-task: "タスクを登録する"
@@ -97,9 +96,8 @@ ja:
     priority_blank: "優先度を入力してください"
     #ステータスが未入力の場合のバリデーションメッセージ
     status_blank: "ステータスを入力してください"
-
+  
   flash_messages:
     task_created: "タスクを登録ました"
     task_updated: "タスクを更新しました"
     task_destroyed: "タスクを削除しました"
-

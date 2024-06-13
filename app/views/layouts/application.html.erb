@@ -9,15 +9,25 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
-
   <!-- グローバルナビゲーションの作成 -->
   <!-- コンテンツの主要なナビゲーション部分を識別するため<nav>を使用する -->
   <!-- アプリの国際化の設定 -->
- <nav> 
-<li> <%= link_to t("global_navigation.tasks_index_link"), tasks_path, id:'tasks-index' %> </li>
-<li><%= link_to t("global_navigation.new-task"), new_task_path, id:'new-task' %></li>
- </nav>
+  <body>
+    <header>
+      <nav> 
+        <ul>
+        <% if logged_in? %>
+          <li> <%= link_to t("global_navigation.tasks_index_link"), tasks_path, id:'tasks-index' %> </li>
+          <li><%= link_to t("global_navigation.new-task"), new_task_path, id:'new-task' %></li>
+          <li><%= link_to "アカウント設定", user_path(current_user), id:"account-setting" %></li>
+          <li><%= link_to "ログアウト", session_path(current_user.id), method: :delete, id:"sign-out" %></li>
+        <% else %>
+          <li><%= link_to "アカウント登録", new_user_path, id:"sign-up"%></li>
+          <li><%= link_to "ログイン", new_session_path, id:"sign-in" %></li>
+        <% end %>
+        </ul>
+      </nav>
+    </header>
 
     <% flash.each do |message_type, message| %>
      <div class="flash-message <%= message_type %>"><%= message %></div>
