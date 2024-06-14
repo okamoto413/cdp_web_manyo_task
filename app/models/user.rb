@@ -9,14 +9,15 @@ class User < ApplicationRecord
   validates :name, presence:  {message:"名前を入力してください"}
 
 #機能要件：メールアドレスが未入力の場合	
-  validates :email, presence: {message:"メールアドレスを入力してください"}, length: { maximum: 255 }, uniqueness: true
+  validates :email, presence: {message:"メールアドレスを入力してください"}, uniqueness: true
 
 #機能要件：メールアドレスがすでに使用されていた場合
   validates :email, presence: {message:"メールアドレスはすでに使用されています"}, uniqueness: true
-  before_validation { email! }
+  before_validation { email.downcase!  if email.present? }
 
 #機能要件：パスワードが未入力の場合
   validates :password,presence: {message:"パスワードを入力してください"}
+  validates :password_confirmation, presence: true
 #機能要件：パスワードが6文字未満の場合
   validates :password, presence: {message:"パスワードは6文字以上で入力してください"},length: { minimum: 6}
 
