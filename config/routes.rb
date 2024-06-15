@@ -2,7 +2,7 @@ Rails.application.routes.draw do
     #タスク一覧画面へのリンク
   root 'tasks#index'
 
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  # For details on the DSL available within this fFile, see https://guides.rubyonrails.org/routing.html
   resources :sessions, only: [:new, :create, :destroy]
   # ログイン画面
   #  get 'new_session', to: 'sessions#new', as: 'new_session' 
