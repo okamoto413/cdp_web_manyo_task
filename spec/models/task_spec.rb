@@ -69,31 +69,3 @@ RSpec.describe 'タスクモデル機能', type: :model do
   end
 end
 
-RSpec.describe 'タスク管理機能', type: :system do
-  let(:user) { FactoryBot.create(:user) }
-
-  describe '一覧表示機能' do
-    let!(:first_task) { FactoryBot.create(:task, title:'first_task_title', content:'最初のタスク説明', priority: :high, status: :not_started, created_at: 1.day.ago)}
-    let!(:second_task) { FactoryBot.create(:second_task, title: 'second_task_title', content: '2番目のタスク説明', created_at:1.hour.ago, status: :not_started)}
-    let!(:third_task) { FactoryBot.create(:third_task, title: 'third_task_title', content: '3番目のタスク説明', created_at:1.minute.ago, status: :not_started) }
-
-    # before do
-    #   visit tasks_path
-    # end
-
-    before do
-    visit new_session_path
-    # ログインさせるコードを記述
-    fill_in 'メールアドレス', with: user.email
-    fill_in 'パスワード', with: user.password
-    click_button 'ログイン'
-    visit tasks_path
-    end
-
-    it 'タスクが作成日時の降順に表示される' do
-      # visit tasks_path
-      task_titles=all('.task_title').map(&:text)
-        expect(task_titles).to eq ['third_task_title', 'second_task_title', 'first_task_title']
-    end
-  end  
-end 
