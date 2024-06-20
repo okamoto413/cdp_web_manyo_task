@@ -65,3 +65,8 @@ gem 'rails-i18n'
 
 #kaminari 追加：ページネーションを実装
 gem 'kaminari'
+
+#'faker'追加
+group :test do
+  gem 'faker'
+end

@@ -1,0 +1,28 @@
+<h1 a href="/admin/users/new" id="add-user">ユーザ登録ページ</h1>
+<% if @user.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@user.errors.count, "error") %> prohibited this <%= @user.name %> from being saved:</h2>
+    <ul>
+    <% @user.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+<%= form_with(model: [:admin, @user], local: true) do |form| %>
+  <div>
+    <p><%= form.label :name, "名前" %></p>
+    <p><%= form.text_field :name %></p>
+    <p><%= form.label :email, "メールアドレス" %></p>
+    <p><%= form.email_field :email %></p>
+    <p><%= form.label :password, "パスワード" %></p>
+    <p><%= form.password_field :password %></p>
+    <p><%= form.label :password_confirmation, "パスワード（確認）" %></p>
+    <p><%= form.password_field :password_confirmation %></p>
+    <p><%= form.label :admin, "管理者権限" %></p>
+    <p><%= form.check_box :admin %></p>
+  </div>
+  <div>
+    <%= form.submit "登録する", id: 'create-user' %>
+  </div>
+<% end %>
