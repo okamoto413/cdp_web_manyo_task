@@ -3,6 +3,7 @@ ja:
   activerecord:
     models:
       task: タスク
+      user: ユーザ
     attributes:
       task:
         title: タイトル
@@ -10,6 +11,16 @@ ja:
         deadline_on: 終了期限
         priority: 優先度
         status: ステータス
+      user:
+        name: 名前
+        email: メールアドレス
+        password: パスワード
+  errors:
+    messages:
+      taken: "はすでに使用されています"
+      blank: "を入力してください"
+      too_short: "は%{count}文字以上で入力してください"
+      confirmation: "と%{attribute}の入力が一致しません"
 
   global_navigation:    
     tasks_index_link: "タスク一覧"

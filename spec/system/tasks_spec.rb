@@ -128,7 +128,7 @@ RSpec.describe 'タスク管理機能', type: :system do
     # ログインさせるコードを記述
     fill_in 'メールアドレス', with: user.email
     fill_in 'パスワード', with: user.password
-        click_button 'ログイン'
+      click_button 'ログイン'
       visit tasks_path
     end
     #let!(:user) { FactoryBot.create(:user) }
@@ -137,7 +137,6 @@ RSpec.describe 'タスク管理機能', type: :system do
       # FactoryBotを使用してタスクのインスタンスを生成
       task = FactoryBot.create(:task, title: '詳細タスク', content:'詳細内容', user: user)
       visit task_path(task)
-      
       expect(page).to have_content '詳細タスク'
       expect(page).to have_content '詳細内容'
       end
