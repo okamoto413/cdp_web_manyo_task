@@ -8,15 +8,13 @@ class User < ApplicationRecord
 #機能要件：名前が未入力の場合	
   validates :name, presence: true
 #機能要件：メールアドレスが未入力の場合	
-  validates :email, presence: true, uniqueness: true
 # 機能要件：メールアドレスがすでに使用されていた場合
-#   validates :email, uniqueness: {message:"メールアドレスはすでに使用されています"}
+  validates :email, presence: true, uniqueness: true
 
 #機能要件：パスワードが未入力の場合
 #機能要件：パスワードが6文字未満の場合
   validates :password,presence:true, length: { minimum: 6}, if: -> { password_required? }
-  # validates :password, presence: {message:"パスワードは6文字以上で入力してください"},length: { minimum: 6}
-    validates :password_confirmation, presence: true, if: -> { password_required? }
+  validates :password_confirmation, presence: true, if: -> { password_required? }
   #機能要件：パスワードとパスワード（確認）が一致しない場合	
   validates_confirmation_of :password
   
