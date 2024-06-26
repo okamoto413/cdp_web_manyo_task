@@ -14,9 +14,9 @@ class User < ApplicationRecord
 #機能要件：パスワードが未入力の場合
 #機能要件：パスワードが6文字未満の場合
   validates :password,presence:true, length: { minimum: 6}, if: -> { password_required? }
-  validates :password_confirmation, presence: true, if: -> { password_required? }
+  #validates :password_confirmation, presence: true, if: -> { password_required? }
   #機能要件：パスワードとパスワード（確認）が一致しない場合	
-  validates_confirmation_of :password
+  #validates_confirmation_of :password
   
   #削除前に削除防止コールバック（ def ensure_at_least_one_admin）でチェックする
   before_destroy :ensure_at_least_one_admin
