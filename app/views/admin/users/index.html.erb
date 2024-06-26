@@ -12,11 +12,10 @@
   </thead>
   <tbody>
     <% @users.each do |user| %>
-      <tr>
+      <tr id="user-<%= user.id %>">
         <td><%= user.name %></td>
         <td><%= user.email %></td>
         <td><%= user.admin ? 'あり' : 'なし' %></td>
-        <td><%= user.tasks.count %></td>
         <td><%= user.tasks.count %></td> <!--  # N+1問題回避 -->
         <td>
           <%= link_to '詳細', admin_user_path(user), class: 'show-user' %>

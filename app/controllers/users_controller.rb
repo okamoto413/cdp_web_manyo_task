@@ -66,7 +66,7 @@ class UsersController < ApplicationController
   def correct_user
      @user = User.find(params[:id])
      unless current_user?(@user)
-       redirect_to correct_user
+       redirect_to tasks_path
      end
    end  
 

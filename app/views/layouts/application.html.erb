@@ -20,7 +20,7 @@
           <li><%= link_to "ユーザ一覧", admin_users_path, id:"users-index" %></li>
           <li><%= link_to "ユーザを登録する", new_admin_user_path, id:"add-user", data: { turbolinks: false }  %></li>
           <li> <%= link_to t("global_navigation.tasks_index_link"), tasks_path, id:'tasks-index' %> </li>
-          <li><%= link_to t("global_navigation.new-task"), new_task_path, id:'new-task' %></li>
+          <li><%= link_to t("global_navigation.new_task"), new_task_path, id:'new-task' %></li>
           <li><%= link_to "アカウント設定", user_path(current_user), id:"account-setting" %></li>
           <li><%= link_to "ログアウト", session_path(current_user.id), method: :delete, id:"sign-out" %></li>
         <% else %>
