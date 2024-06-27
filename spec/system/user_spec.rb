@@ -30,7 +30,6 @@ require 'rails_helper'
     end
 
     describe 'ログイン機能' do
-    # let!(:user) { FactoryBot.create(:user, name: 'Valid User',email:'valid@example.com',  password: 'password')}
 
     context '登録済みのユーザでログインした場合' do
       before do
@@ -65,8 +64,6 @@ require 'rails_helper'
 
   describe '管理者機能' do
     context '管理者がログインした場合' do
-    # let!(:admin) { FactoryBot.create(:user, :admin, email: 'admin@example.com') }
-    # let!(:user) { FactoryBot.create(:user, email: 'user@example.com') }
     before do
       visit new_session_path
       # ログイン
@@ -91,7 +88,6 @@ require 'rails_helper'
         click_button '登録する'
       
         expect(page).to have_content 'ユーザを登録しました'
-        # expect(User.last.admin?).to be true
       end
       
       it 'ユーザ詳細画面にアクセスできる' do

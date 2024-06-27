@@ -30,6 +30,7 @@ class UsersController < ApplicationController
 
   #アカウントを編集する
   def edit
+    set_user
   end
 
   #アカウント詳細画面
