@@ -20,7 +20,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       log_in(@user)
-      redirect_to @user
+      redirect_to tasks_path
       session[:user_id] = @user.id
       flash[:success]= "アカウントを登録しました。"
     else
