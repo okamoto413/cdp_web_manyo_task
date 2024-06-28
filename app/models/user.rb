@@ -1,5 +1,6 @@
 class User < ApplicationRecord
-  before_save :downcase_email
+  #メールアドレスを小文字に変換
+  before_validation :downcase_email
   has_secure_password
   
  #ユーザとタスクをアソシエーションし、タスク一覧画面には自分が作成したタスクのみを表示させる
@@ -8,8 +9,8 @@ class User < ApplicationRecord
 #機能要件：名前が未入力の場合	
   validates :name, presence: true
 #機能要件：メールアドレスが未入力の場合	
-# 機能要件：メールアドレスがすでに使用されていた場合
-  validates :email, presence: true, uniqueness: true
+#メールアドレスがすでに使用されていた場合,大文字小文字を区別しない設定を追加
+  validates :email, presence: true, uniqueness: {case_sensitive: false}
 
 #機能要件：パスワードが未入力の場合
 #機能要件：パスワードが6文字未満の場合
@@ -25,7 +26,7 @@ class User < ApplicationRecord
   private
 
   def downcase_email
-    self.email = email.downcase
+    self.email = email.downcase if email.present?
   end
 
   def password_required?

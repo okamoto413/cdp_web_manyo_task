@@ -27,9 +27,11 @@ class Admin::UsersController < ApplicationController
   end
                 
   def edit
+    set_user
   end
         
   def show
+    set_user
   end
 
   def update

@@ -4,9 +4,14 @@ class ApplicationController < ActionController::Base
 
   private
   def login_required
-    unless current_user
-      flash[:danger] = "ログインしてください"
+    unless current_user #ログインをせずにログイン画面とアカウント登録画面以外にアクセスした場合、ログインページに遷移させ「ログインしてください」というフラッシュメッセージを表示させること
+      flash[:alert] = I18n.t('flash_messages.login_required')
       redirect_to new_session_path
+    else #ログイン中にログイン画面、あるいはアカウント登録画面にアクセスした場合、タスク一覧画面に遷移させ「ログアウトしてください」というフラッシュメッセージを表示させる
+      if request.fullpath == new_session_path || request.fullpath == new_user_path
+      flash[:alert] = I18n.t('flash_messages.logout_required')
+        redirect_to tasks_path
+      end
     end
   end
 end
