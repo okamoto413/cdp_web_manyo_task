@@ -39,6 +39,7 @@ class Admin::UsersController < ApplicationController
       flash[:success] = I18n.t('flash_messages.user_updated')
       redirect_to admin_users_path(@user)
     else
+      # flash[:error] = @user.errors.full_messages.join(", ")
       render :edit
     end
   end

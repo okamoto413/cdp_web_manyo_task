@@ -17,7 +17,7 @@
       <nav> 
         <ul>
         <% if logged_in? %>
-          <% if current_user.admin? %> #管理者か一般ユーザーかを確認
+          <% if current_user.admin? %> <!-- 管理者か一般ユーザーかを確認 -->
             <li><%= link_to "ユーザ一覧", admin_users_path, id:"users-index" %></li>
             <li><%= link_to "ユーザを登録する", new_admin_user_path, id:"add-user", data: { turbolinks: false }  %></li>
           <% end %>

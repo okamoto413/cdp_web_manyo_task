@@ -14,7 +14,9 @@ class User < ApplicationRecord
 
 #機能要件：パスワードが未入力の場合
 #機能要件：パスワードが6文字未満の場合
-  validates :password,presence:true, length: { minimum: 6}, if: -> { password_required? }
+  validates :password,presence:true, length: { minimum: 6},
+#   パスワードが存在しない場合、バリデーションを適用する
+  if: -> {new_record? || !password.nil? }
   #機能要件：パスワードとパスワード（確認）が一致しない場合	
 
   

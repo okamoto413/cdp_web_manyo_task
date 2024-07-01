@@ -22,7 +22,8 @@ class UsersController < ApplicationController
       log_in(@user)
       redirect_to tasks_path
       session[:user_id] = @user.id
-      flash[:success]= "アカウントを登録しました。"
+      flash[:success]= I18n.t('flash_messages.account_created')
+      #  "アカウントを登録しました。"
     else
       render :new
     end
@@ -41,8 +42,9 @@ class UsersController < ApplicationController
   def update
     if @user.update(user_params)
       redirect_to user_path(@user.id)
-      flash[:success] = "アカウントを更新しました"
+      flash[:success]=  I18n.t('flash_messages.account_updated')
     else
+      # flash[:error] = @user.errors.full_messages.join(", ")
       render :edit
     end
   end
