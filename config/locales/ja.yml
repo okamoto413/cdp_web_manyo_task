@@ -17,6 +17,7 @@ ja:
         password: パスワード
         password_confirmation: パスワード（確認）
         admin: 管理者権限
+      
 
   global_navigation:    
     tasks_index_link: "タスク一覧"
@@ -96,12 +97,12 @@ ja:
   # バリデーションメッセージ
   errors:
     messages:
-      taken: "はすでに使用されています"
-      blank: "を入力してください"
-      too_short: "は%{count}文字以上で入力してください"
-      confirmation: "と%{attribute}の入力が一致しません"
-          
-  # validation_messages:
+      cannot_delete_last_admin: "管理者が0人になるため削除できません"
+      cannot_change_last_admin: "管理者が0人になるため権限を変更できません"
+      # taken: "はすでに使用されています"
+      # blank: "を入力してください"
+      # too_short: "は%{count}文字以上で入力してください"
+      # confirmation: "と%{attribute}の入力が一致しません"
   models:
     task:
       attributes:
