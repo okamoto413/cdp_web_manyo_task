@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   before_action :logout_required, only:[:new, :create]
 
   # #ユーザーによって実行可能
-  # before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
   # #管理者権限によって下記実行可能
   # before_action :admin_user, only: [:destroy]
 
@@ -79,6 +79,9 @@ class UsersController < ApplicationController
   end   
 
   def logout_required #ログインしていたら、ログアウトの表示させるかつ、タスク一覧画面へ遷移する。
-    
+    if current_user
+    redirect_to tasks_path
+    flash[:notice]=  I18n.t('flash_messages.logout_required')
+    end
   end
 end
