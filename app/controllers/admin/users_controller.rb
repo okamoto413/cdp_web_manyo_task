@@ -23,6 +23,10 @@ class Admin::UsersController < ApplicationController
       render :new
     end
   end
+
+  # ログイン画面やアカウント登録画面にアクセスしているか確認する
+  # def accessing_login_or_signup?
+  #   request.fullpath == new_session_path || request.fullpath == new_user_path
                 
   def edit
   end

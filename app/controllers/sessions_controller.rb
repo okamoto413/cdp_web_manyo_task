@@ -8,12 +8,12 @@ class SessionsController < ApplicationController
   def create
     user = User.find_by(email: params[:session][:email].downcase)
     if user && user.authenticate(params[:session][:password])
-	  log_in(user)
-	  flash[:success] = "ログインしました"
-	  redirect_to tasks_path
+      log_in(user)
+      flash[:success] = "ログインしました"
+      redirect_to tasks_path
 	  else
-	  flash[:danger] = 'メールアドレスまたはパスワードに誤りがあります'
-	  render :new
+      flash[:danger] = 'メールアドレスまたはパスワードに誤りがあります'
+      render :new
 	  end
   end
 
@@ -42,14 +42,15 @@ class SessionsController < ApplicationController
     end
   end
 
-  def login_required
-    redirect_to new_session_path unless current_user
-  end
+  # def login_required
+  #   redirect_to new_session_path unless current_user
+  # end
   
   #session_controllerの'new'（ログイン画面）にアクセスした場合
   #users_controllerの'new'（アカウント登録画面）にアクセスした場合
-  def current_user
-    @current_user ||= User.find_by(id: session[:user_id]) if session[:user_id]
+  # def current_user
+  #   @current_user ||= User.find_by(id: session[:user_id]) if session[:user_id]
+  # end
     
     # if params[:controller] == "sessions" && params[:action] == "new" ||
     #     params[:controller] == "sessions" && params[:action] == "new"
@@ -61,6 +62,5 @@ class SessionsController < ApplicationController
     #   flash[:danger] = "ログインしてください"
     #   redirect_to new_session_path
     # end
-  end
 end
 

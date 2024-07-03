@@ -34,9 +34,11 @@ class User < ApplicationRecord
 
   #管理者が一人しかいない状態でそのユーザを削除しようとした場合
   def ensure_an_admin_remains
-    if User.where(admin: true).count <= 1
+    if User.where(admin: true).count <= 1 && admin?
       errors.add(:base, I18n.t("errors.messages.cannot_delete_last_admin"))
       throw(:abort)
+    elsif !admin?
+      return true
     end
   end  
 
@@ -44,7 +46,7 @@ class User < ApplicationRecord
   def ensure_an_admin_remains_if_admin_changed
     # if User.where(admin: true).count == 1 && admin_was && !admin?
     if admin_was && !admin? && User.where(admin: true).count == 1 
-      errors.add(base, I18n.t(errors.messages.cannot_change_last_admin))
+      errors.add(:base, I18n.t("errors.messages.cannot_change_last_admin"))
       throw(:abort)
     end
   end

@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_action :correct_user, only: [:show, :update, :destroy ]
   skip_before_action :login_required, only: [:new, :create]
+  before_action :logout_required, only:[:new, :create]
 
   # #ユーザーによって実行可能
   # before_action :set_user, only: [:show, :edit, :update, :destroy]
@@ -23,7 +24,6 @@ class UsersController < ApplicationController
       redirect_to tasks_path
       session[:user_id] = @user.id
       flash[:success]= I18n.t('flash_messages.account_created')
-      #  "アカウントを登録しました。"
     else
       render :new
     end
@@ -31,7 +31,6 @@ class UsersController < ApplicationController
 
   #アカウントを編集する
   def edit
-    set_user
   end
 
   #アカウント詳細画面
@@ -78,4 +77,8 @@ class UsersController < ApplicationController
     unless current_user.admin?
     end
   end   
+
+  def logout_required #ログインしていたら、ログアウトの表示させるかつ、タスク一覧画面へ遷移する。
+    
+  end
 end
