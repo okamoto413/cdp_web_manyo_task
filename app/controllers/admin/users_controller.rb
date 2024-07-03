@@ -2,7 +2,7 @@ class Admin::UsersController < ApplicationController
 
  #下記アクションの前に、現在ログインしているユーザーを設定する
  #管理者権限のチェックを行い、管理者以外のユーザーのアクセス制限をする
-  before_action :admin_user
+  before_action :admin_user, expect:[:index, :show, ]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   # N+1問題回避(includes)
@@ -35,6 +35,7 @@ class Admin::UsersController < ApplicationController
       redirect_to admin_users_path(@user)
       flash[:success] = I18n.t('flash_messages.user_updated')
     else
+      flash[:success] = I18n.t('flash_messages.cannot_change_last_admin')
       # flash[:error] = @user.errors.full_messages.join(", ")
       render :edit
     end
@@ -44,7 +45,8 @@ class Admin::UsersController < ApplicationController
     if @user.destroy
       flash[:success] = I18n.t('flash_messages.user_destroyed')
     else
-      flash[:alert] = @user.errors.full_messages.join(", ")
+       flash[:success] = I18n.t('flash_messages.cannot_delete_last_admin')
+      # flash[:alert] = @user.errors.full_messages.join(", ")
     end
       redirect_to admin_users_path
   end  

@@ -3,6 +3,7 @@ require 'rails_helper'
   RSpec.describe 'ユーザ管理機能', type: :system do
     let!(:user) { FactoryBot.create(:user, name: 'Valid User', email: 'valid@example.com', password: 'password') }  
     let!(:admin) { FactoryBot.create(:admin_user)}
+    let!(:other_admin) { FactoryBot.create(:admin_user, name: 'Other Admin', email: 'otheradmin@example.com', password: 'password')}
     let!(:other_user) { FactoryBot.create(:user, name: 'Other User', email: 'other@example.com', password: 'password')}
 
     describe '登録機能' do
@@ -101,7 +102,6 @@ require 'rails_helper'
         fill_in 'メールアドレス', with: 'newadmin@example.com'
         fill_in 'パスワード', with: 'password'
         fill_in 'パスワード（確認）', with: 'password'
-
         click_button '更新する'
 
         expect(page).to have_content 'ユーザを更新しました'
@@ -110,11 +110,11 @@ require 'rails_helper'
       
       it 'ユーザを削除できる' do
         visit admin_users_path
-        within "#user-#{user.id}" do 
+          expect(User.where(admin: true).count) .to be > 1  #管理者が2人以上いることを確認
+          within "#user-#{user.id}" do 
           expect(page).to have_link('削除', class:'destroy-user') 
           click_link '削除' 
         end
-
         expect(page).to have_content 'ユーザを削除しました'
         expect(User.exists?(user.id)).to be false
       end
