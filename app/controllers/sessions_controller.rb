@@ -41,26 +41,5 @@ class SessionsController < ApplicationController
     redirect_to tasks_path 
     end
   end
-
-  # def login_required
-  #   redirect_to new_session_path unless current_user
-  # end
-  
-  #session_controllerの'new'（ログイン画面）にアクセスした場合
-  #users_controllerの'new'（アカウント登録画面）にアクセスした場合
-  # def current_user
-  #   @current_user ||= User.find_by(id: session[:user_id]) if session[:user_id]
-  # end
-    
-    # if params[:controller] == "sessions" && params[:action] == "new" ||
-    #     params[:controller] == "sessions" && params[:action] == "new"
-    #     flash[:danger] = "ログアウトしてください"  
-    #     redirect_to tasks_path
-    # end  
-    # else
-    #   unless current_user
-    #   flash[:danger] = "ログインしてください"
-    #   redirect_to new_session_path
-    # end
 end
 

@@ -1,6 +1,5 @@
 class TasksController < ApplicationController
-  #アクセス権限をチェックする
-  # before_action :authorize_user!, only: [:show, :edit ]
+
   before_action :set_task, only: [:show, :update, :destroy ]
   
   def index

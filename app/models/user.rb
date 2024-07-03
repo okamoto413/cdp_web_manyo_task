@@ -44,7 +44,6 @@ class User < ApplicationRecord
 
   # 管理者が一人しかいない場合
   def ensure_an_admin_remains_if_admin_changed
-    # if User.where(admin: true).count == 1 && admin_was && !admin?
     if admin_was && !admin? && User.where(admin: true).count == 1 
       errors.add(:base, I18n.t("errors.messages.cannot_change_last_admin"))
       throw(:abort)

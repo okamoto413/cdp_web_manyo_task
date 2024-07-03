@@ -2,15 +2,8 @@ class UsersController < ApplicationController
   before_action :correct_user, only: [:show, :update, :destroy ]
   skip_before_action :login_required, only: [:new, :create]
   before_action :logout_required, only:[:new, :create]
-
-  # #ユーザーによって実行可能
+  # ユーザーによって実行可能
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  # #管理者権限によって下記実行可能
-  # before_action :admin_user, only: [:destroy]
-
-  # def index
-  #   @users = User.includes(:tasks).all
-  # end
 
   def new
     @user = User.new
