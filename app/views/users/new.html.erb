@@ -1,0 +1,22 @@
+<h1>アカウント登録ページ</h1>
+<% if @user.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@user.errors.count, "error") %> prohibited this <%= @user.name %> from being saved:</h2>
+    <ul>
+    <% @user.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+<%= form_with(model: @user, local: true) do |f| %>
+  <p><%= f.label :名前 %></p>
+  <p><%= f.text_field :name %></p>
+  <p><%= f.label :メールアドレス %></p>
+  <p><%= f.email_field :email %></p>
+  <p><%= f.label :パスワード %></p>
+  <p><%= f.password_field :password %></p>
+  <p><%= f.label :パスワード（確認） %></p>
+  <p><%= f.password_field :password_confirmation %></p>
+  <p><%= f.submit "登録する", id:"create-user" %></p>
+<% end %>

@@ -1,14 +1,13 @@
 class TasksController < ApplicationController
- 
-  def index
-    @tasks = Task.all.order(created_at: :desc)
 
+  before_action :set_task, only: [:show, :update, :destroy ]
+  
+  def index
+    @tasks = current_user.tasks.order(created_at: :desc)
     # ページネーション：タスク一覧画面にページネーションを実装し、1ページあたり10件のタスクを表示させる
     @task_model_name = t("activerecord.models.task")
     @task_title_attribute = t("activerecord.attributes.task.title")
-    # 一覧画面（ログイン中のユーザーのタスクのみ表示する）
-    #@tasks = Task.where(user_id: current_user.id)
-    
+
     # ソート処理   
     if params[:sort_deadline_on]
       @tasks = Task.sorted_by_deadline
@@ -16,19 +15,6 @@ class TasksController < ApplicationController
       # @tasks = Task.sorted_by_priority
       @tasks =Task.sorted_by_priority.order(priority: :desc, created_at: :desc)
     end  
-    
-    #テーブルヘッダーの「優先度」をクリックした際、優先度の高い順にソートし、かつ優先度が同じ場合は作成日時の降順で表示させる
-    # @tasks=Task.all.order(priority: :desc, created_at: :desc) 
-
-   
-    # 「優先度」をクリックした際、優先度の高い順にソートし、かつ優先度が同じ場合は作成日時の降順で表示させる
-    #     if params[:sort_deadline_on]
-    #       # 終了期限でのソート。終了期限が同じ場合は作成日時で降順にソート
-    #       @tasks = @tasks.order(deadline_on: :asc, created_at: :desc)
-    #     elsif params[:sort_priority]
-    #        # 優先度でのソート。優先度が同じ場合は作成日時で降順にソート
-    #       @tasks = @tasks.order(priority: :desc, created_at: :desc)
-    #     end
     
     if params[:search].present?
       search_params = params[:search]
@@ -44,7 +30,6 @@ class TasksController < ApplicationController
   end
 
   def show
-    @task = Task.find(params[:id])
   end  
 
   def new
@@ -52,14 +37,14 @@ class TasksController < ApplicationController
   end    
 
   def edit
-    @task = Task.find(params[:id])
+    set_task
   end
   
+    # 一覧画面（ログイン中のユーザーのタスクのみ表示する）
   def create
-    @task = Task.new(task_params)
-    if @task.save 
-      #タスクの登録に成功した場合	Task was successfully created.のフラッシュメッセージを表示させる     
-      flash[:notice]= t("flash_messages.task_created")
+     @task = current_user.tasks.new(task_params)
+    if @task.save
+      flash[:error] = t("flash_messages.access_denied") 
       #登録された場合、タスク一覧画面へ遷移する
       redirect_to tasks_path(@task)
     else
@@ -69,7 +54,7 @@ class TasksController < ApplicationController
   end
 
   def update
-    @task = Task.find(params[:id])
+    @task = current_user.tasks.find(params[:id])
     if @task.update(task_params)
       #タスクの更新に成功した場合	Task was successfully updated.のフラッシュメッセージを表示させる。
       flash[:notice]= t("flash_messages.task_updated")
@@ -81,7 +66,7 @@ class TasksController < ApplicationController
   end  
 
   def destroy
-    @task = Task.find(params[:id])
+    @task = current_user.tasks.find(params[:id])
     @task.destroy
     #タスクを削除した場合	Task was successfully destroyed.のフラッシュメッセージを表示させる。
     flash[:notice]= t("flash_messages.task_destroyed")
@@ -90,7 +75,14 @@ class TasksController < ApplicationController
   end  
   
   private
-
+  #他人のタスク詳細画面、あるいはタスク編集画面にアクセスしようとした場合
+  def set_task
+    @task = current_user.tasks.find_by(id: params[:id])
+    unless @task && @task.user == current_user
+      flash[:alert]= t("flash_messages.access_denied") #「アクセス権限がありません」というフラッシュメッセージを表示させる
+      redirect_to tasks_path
+    end
+  end
   # Only allow a list of trusted parameters through.
   def task_params
     params.require(:task).permit(:title, :content, :deadline_on, :priority, :status,)

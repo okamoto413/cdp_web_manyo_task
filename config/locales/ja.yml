@@ -3,6 +3,7 @@ ja:
   activerecord:
     models:
       task: タスク
+      user: ユーザ
     attributes:
       task:
         title: タイトル
@@ -10,11 +11,17 @@ ja:
         deadline_on: 終了期限
         priority: 優先度
         status: ステータス
-
+      user:
+        name: 名前
+        email: メールアドレス
+        password: パスワード
+        password_confirmation: パスワード（確認）
+        admin: 管理者権限
+      
 
   global_navigation:    
     tasks_index_link: "タスク一覧"
-    new-task: "タスクを登録する"
+    new_task: "タスクを登録する"
 
   tasks_index:
     page_title: "タスク一覧ページ"
@@ -85,21 +92,64 @@ ja:
       content: "内容"
     update_button: "更新する"
     back_to_show_task_link: "戻る"
-   
-  validation_messages:
-    #タイトルが未入力の場合のバリデーションメッセージ
-    title_blank: "タイトルを入力してください"
-    #内容が未入力の場合のバリデーションメッセージ
-    content_blank: "内容を入力してください"
-    #終了期限が未入力の場合のバリデーションメッセージ
-    deadline_on_blank: "終了期限を入力してください"
-    #優先度が未入力の場合のバリデーションメッセージ           
-    priority_blank: "優先度を入力してください"
-    #ステータスが未入力の場合のバリデーションメッセージ
-    status_blank: "ステータスを入力してください"
 
+   
+  # バリデーションメッセージ
+  errors:
+    messages:
+      taken: "はすでに使用されています"
+      blank: "を入力してください"
+      too_short: "は%{count}文字以上で入力してください"
+      confirmation: "と%{attribute}の入力が一致しません"
+  models:
+    task:
+      attributes:
+    #タイトルが未入力の場合のバリデーションメッセージ
+        title:
+          blank: "タイトルを入力してください"          
+    # title_blank: "タイトルを入力してください"
+    #内容が未入力の場合のバリデーションメッセージ
+        content:
+          blank: "内容を入力してください"
+    #終了期限が未入力の場合のバリデーションメッセージ
+        deadline_on:
+          blank: "終了期限を入力してください"
+    #優先度が未入力の場合のバリデーションメッセージ           
+        priority:
+         blank: "優先度を入力してください"
+    #ステータスが未入力の場合のバリデーションメッセージ
+        status:
+          blank: "ステータスを入力してください"
+  #step4追記
+    user:
+      attributes:
+        name:
+          blank: "名前を入力してください"
+        email:
+         blank: "メールアドレスを入力してください"
+         taken: "メールアドレスはすでに使用されています"
+        password:
+          blank: "パスワードを入力してください"
+          too_short: "パスワードは6文字以上で入力してください"
+        password_confirmation:
+          confirmation: "パスワード（確認）とパスワードの入力が一致しません"
+  
   flash_messages:
     task_created: "タスクを登録ました"
     task_updated: "タスクを更新しました"
     task_destroyed: "タスクを削除しました"
-
+   #step4追記
+    account_created: "アカウントを登録しました"
+    account_updated: "アカウントを更新しました"
+    login_success: "ログインしました"
+    login_failure: "メールアドレスまたはパスワードに誤りがあります"
+    logout: "ログアウトしました"
+    user_created: "ユーザを登録しました"
+    user_updated: "ユーザを更新しました"
+    user_destroyed: "ユーザを削除しました"
+    login_required: "ログインしてください"
+    logout_required: "ログアウトしてください"
+    access_denied: "アクセス権限がありません"
+    only_admin: "管理者以外アクセスできません"
+    cannot_delete_last_admin: "管理者が0人になるため削除できません"
+    cannot_change_last_admin: "管理者が0人になるため権限を変更できません"
