@@ -24,10 +24,6 @@ class Admin::UsersController < ApplicationController
     end
   end
 
-  # ログイン画面やアカウント登録画面にアクセスしているか確認する
-  # def accessing_login_or_signup?
-  #   request.fullpath == new_session_path || request.fullpath == new_user_path
-                
   def edit
   end
         
@@ -40,7 +36,6 @@ class Admin::UsersController < ApplicationController
       flash[:success] = I18n.t('flash_messages.user_updated')
     else
       flash[:success] = I18n.t('flash_messages.cannot_change_last_admin')
-      # flash[:error] = @user.errors.full_messages.join(", ")
       render :edit
     end
   end
@@ -50,7 +45,6 @@ class Admin::UsersController < ApplicationController
       flash[:success] = I18n.t('flash_messages.user_destroyed')
     else
        flash[:success] = I18n.t('flash_messages.cannot_delete_last_admin')
-      # flash[:alert] = @user.errors.full_messages.join(", ")
     end
       redirect_to admin_users_path
   end  

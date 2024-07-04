@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+  get 'labels/index'
+  get 'labels/new'
+  get 'labels/create'
+  get 'labels/edit'
+  get 'labels/update'
+  get 'errors/not_found'
+  get 'errors/internal_server_error'
     #タスク一覧画面へのリンク
   root 'tasks#index'
 
@@ -8,29 +15,29 @@ Rails.application.routes.draw do
 
    #タスク関連
   resources :tasks, only: [:new, :show, :index, :edit, :create, :destroy, :update]
-
  
   #ユーザの登録フォームを作成   #一般ユーザー関連ルーティング
   resources :users, only: [:new, :create, :show, :edit, :update, :destroy]
-    # collection do
-    #   get 'new', to: 'users#new',  as: 'new_user'   # アカウント登録画面
-    # end
-    # member do
-    #   get 'edit', to: 'users#edit', as: 'edit_user'  # アカウント編集画面
-    #   get '', to: 'users#show', as:'user' # アカウント詳細画面
-    # end
 
 
   # 管理者用のユーザ関連ルーティング
   namespace :admin do
     resources :users, only: [:new, :show, :index, :edit, :create, :destroy, :update]
-      # collection do
-      #   get '', to: 'users#index', as: 'admin_users' # ユーザ一覧画面（管理者）
-      #   get 'new', to: 'users#new', as: 'new_admin_user'  # ユーザ登録画面（管理者）
-      # end
-      # member do  
-      #   get 'edit', to: 'users#edit', as: 'edit_admin_user'  # ユーザ編集画面（管理者）
-      #   get '', to: 'users#show', as: 'admin_user'  # ユーザ詳細画面（管理者）
-      # end
   end
+
+  # ラベル一覧画面
+  get "labels", to: "labels#index", as: "labels"
+
+  # ラベル登録画面
+  get "new_label", to: "labels#new", as: "new_label"
+  post "new_label", to: "labels#create"
+
+  # ラベル編集画面
+  get "edit_label", to: "labels#edit", as: "edit_label"
+  patch "edit_label/:id", to: "labels#update"
+  post "edit_label/:id", to: "labels#update"
+
+  # エラーページ
+  match "/404", to: "errors#not_found", via: :all
+  match "/405", to: "errors#internal_server_error", via: :all
 end
