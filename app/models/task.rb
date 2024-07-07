@@ -1,5 +1,10 @@
 class Task < ApplicationRecord
   belongs_to :user
+  has_many :task_labels
+  has_many :labels, through: :task_labels
+#親モデルをTaskモデルとし、子モデルをTaskLabelモデル(中間テーブル)とする
+#親モデルのフォームより子モデルを削除できる
+  accepts_nested_attributes_for :task_labels, allow_destroy: true
 
   # バリデーションに失敗した場合、タイトルが未入力の場合	"Title can’t be blank"とバリデーションメッセージを表示させる。
   validates :title, presence:true

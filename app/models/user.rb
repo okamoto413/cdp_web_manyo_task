@@ -2,15 +2,15 @@ class User < ApplicationRecord
   #メールアドレスを小文字に変換
   before_validation :downcase_email
   has_secure_password
+  #ユーザとタスクをアソシエーションし、タスク一覧画面には自分が作成したタスクのみを表示させる
+   has_many :tasks, dependent: :destroy
+   
+   has_many:labels
+
   #管理者が一人しかいない状態の場合.コールバックで削除を制御
   before_destroy :ensure_an_admin_remains, prepend: true
-
   #コールバックで管理者権限の変更を制御
   before_update :ensure_an_admin_remains_if_admin_changed, if: :admin_changed?
-
-  
- #ユーザとタスクをアソシエーションし、タスク一覧画面には自分が作成したタスクのみを表示させる
-  has_many :tasks, dependent: :destroy
 
 #機能要件：名前が未入力の場合	
   validates :name, presence: true
@@ -21,7 +21,6 @@ class User < ApplicationRecord
 #機能要件：パスワードが未入力の場合、パスワードが6文字未満の場合、パスワードとパスワード（確認）が一致しない場合
   validates :password,presence: true, length: { minimum: 6}
   
-
   private
 
   def downcase_email

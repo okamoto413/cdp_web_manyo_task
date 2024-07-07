@@ -1,2 +1,30 @@
-<h1>Labels#index</h1>
-<p>Find me in app/views/labels/index.html.erb</p>
+<!-- app/views/labels/index.html.erb -->
+
+<h1>ラベル一覧ページ</h1>
+
+<table>
+<thead>
+    <tr>
+      <th>名前</th>
+      <th>タスク数</th>
+      <th>編集</th>
+      <th>削除</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @labels.each do |label| %>
+      <tr>
+        <td class="label_name"><%= label.name %></td>
+        <td><%= タスク数 %></td>
+        <%= label.tasks.count %></td>
+
+        <td><%= link_to "編集", edit_label_path(label.id), class:'edit-label' %></td>
+        <td><%= link_to "削除", label_path(task.id), method: 'delete', 
+        data: { confirm: "本当に削除してもよろしいですか？" } , class:'destroy-label'%></td>
+      </tr>
+        <% end %>
+  </tbody>
+</table>
+
+

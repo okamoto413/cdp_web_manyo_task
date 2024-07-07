@@ -1,2 +1,18 @@
-<h1>Labels#new</h1>
-<p>Find me in app/views/labels/new.html.erb</p>
+<!-- app/views/labels/new.html.erb -->
+
+<h1>ラベル登録ページ</h1>
+
+<div>
+  <%= form_with(model: @label, local: true) do |f| %>
+    <div class="field">
+      <%= f.label :name,"名前" %>
+      <%= f.text_field :name%>
+    </div> 
+
+   <div class="actions">
+  <%= f.submit "登録する" %>
+  </div>
+  <% end %>
+</div> 
+
+<%= link_to '戻る', labels_path %>

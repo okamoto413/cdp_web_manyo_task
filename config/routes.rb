@@ -1,11 +1,5 @@
 Rails.application.routes.draw do
-  get 'labels/index'
-  get 'labels/new'
-  get 'labels/create'
-  get 'labels/edit'
-  get 'labels/update'
-  get 'errors/not_found'
-  get 'errors/internal_server_error'
+
     #タスク一覧画面へのリンク
   root 'tasks#index'
 
@@ -25,17 +19,8 @@ Rails.application.routes.draw do
     resources :users, only: [:new, :show, :index, :edit, :create, :destroy, :update]
   end
 
-  # ラベル一覧画面
-  get "labels", to: "labels#index", as: "labels"
-
-  # ラベル登録画面
-  get "new_label", to: "labels#new", as: "new_label"
-  post "new_label", to: "labels#create"
-
-  # ラベル編集画面
-  get "edit_label", to: "labels#edit", as: "edit_label"
-  patch "edit_label/:id", to: "labels#update"
-  post "edit_label/:id", to: "labels#update"
+  # ラベル一覧画面/登録画面/編集画面
+  resources :labels, only: [:index, :new, :create, :edit, :destroy, :update]
 
   # エラーページ
   match "/404", to: "errors#not_found", via: :all
