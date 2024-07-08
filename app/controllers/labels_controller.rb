@@ -10,7 +10,8 @@ class LabelsController < ApplicationController
   end
 
   def create
-     @label = Label.new(label_params)
+    @user = current_user
+     @label = @user.labels.build(label_params)
     if @label.save
       flash[:success] = "ラベルを登録しました"
       #登録された場合、ラベル一覧画面へ遷移する
@@ -39,6 +40,11 @@ class LabelsController < ApplicationController
     @label.destroy
     flash[:success] = "ラベルを削除しました"
     redirect_to labels_path
+  end
+
+  private
+  def set_label 
+    @label = Label.find(params[:id])
   end
 
   def label_params

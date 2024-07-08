@@ -20,7 +20,10 @@ Rails.application.routes.draw do
   end
 
   # ラベル一覧画面/登録画面/編集画面
+  # ラベル一覧画面にラベルに紐づいているタスクの数を表示させること
+  #  resources :users, only: [:show] do
   resources :labels, only: [:index, :new, :create, :edit, :destroy, :update]
+  # end
 
   # エラーページ
   match "/404", to: "errors#not_found", via: :all
