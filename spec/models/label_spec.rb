@@ -6,12 +6,13 @@
        it 'バリデーションに失敗する' do
          label = FactoryBot.build(:label, name: '')
          expect(label).not_to be_valid
-         expect(user.errors.full_messages).to include('名前を入力してください')    
+         expect(label.errors.full_messages).to include('名前を入力してください')    
        end
      end
 
      context 'ラベルの名前に値があった場合' do
        it 'バリデーションに成功する' do
+         user =  FactoryBot.create(:user)
          label =  FactoryBot.build(:label, name: 'テストラベル')
          expect(label).to be_valid
        end
