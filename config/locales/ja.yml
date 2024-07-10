@@ -4,6 +4,7 @@ ja:
     models:
       task: タスク
       user: ユーザ
+      label: ラベル
     attributes:
       task:
         title: タイトル
@@ -17,6 +18,8 @@ ja:
         password: パスワード
         password_confirmation: パスワード（確認）
         admin: 管理者権限
+      label :
+        name: 名前  
       
 
   global_navigation:    
@@ -133,6 +136,10 @@ ja:
           too_short: "パスワードは6文字以上で入力してください"
         password_confirmation:
           confirmation: "パスワード（確認）とパスワードの入力が一致しません"
+    label:
+      attributes:
+        name:
+          blank: "名前を入力してください"
   
   flash_messages:
     task_created: "タスクを登録ました"

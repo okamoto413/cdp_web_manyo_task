@@ -24,6 +24,9 @@ class TasksController < ApplicationController
         @tasks = @tasks.search_title_like(search_params[:title])
       elsif search_params[:status].present?
         @tasks = @tasks.search_status(search_params[:status])  
+      elsif search_params[:label].present?
+        label = current_user.labels.find(params[:label])
+        @tasks = labels.tasks
       end
     end
     @tasks = @tasks.page(params[:page]).per(10)
@@ -34,10 +37,12 @@ class TasksController < ApplicationController
 
   def new
     @task = Task.new
+    @labels = current_user.labels
   end    
 
   def edit
     set_task
+    @labels = current_user.labels
   end
   
     # 一覧画面（ログイン中のユーザーのタスクのみ表示する）
@@ -48,6 +53,7 @@ class TasksController < ApplicationController
       #登録された場合、タスク一覧画面へ遷移する
       redirect_to tasks_path(@task)
     else
+      @labels = current_user.labels
       render :new
       return
     end
@@ -61,6 +67,7 @@ class TasksController < ApplicationController
       #タスク詳細画面へ遷移。
       redirect_to task_path(params[:id])
     else
+      @labels = current_user.labels
       render :edit   
     end    
   end  
@@ -85,7 +92,7 @@ class TasksController < ApplicationController
   end
   # Only allow a list of trusted parameters through.
   def task_params
-    params.require(:task).permit(:title, :content, :deadline_on, :priority, :status,)
+    params.require(:task).permit(:title, :content, :deadline_on, :priority, :status, label_ids: [])
   end
 
   def search_tasks(search_params)

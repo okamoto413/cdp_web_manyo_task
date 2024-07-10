@@ -1,14 +1,9 @@
 <!-- app/views/labels/edit.html.erb -->
 
 <h1>ラベル編集ページ</h1>
-<%= form_with(model: @label, local: true) do |f| %>
-  <div>
-    <%= f.label :name, '名前' %>
-    <%= f.text_field :name %>
-  </div>
-
-<%= f.submit '更新する' %>
+<%= render 'form', label: @label %>
 
 <!-- ラベル一覧画面に戻るリンク作成する -->
+<div>
 <td><%= link_to "戻る", tasks_path, id:'back'%></td>
-<% end %>
+</div>

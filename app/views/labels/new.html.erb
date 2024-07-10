@@ -2,17 +2,6 @@
 
 <h1>ラベル登録ページ</h1>
 
-<div>
-  <%= form_with(model: @label, local: true) do |f| %>
-    <div class="field">
-      <%= f.label :name,"名前" %>
-      <%= f.text_field :name%>
-    </div> 
-
-   <div class="actions">
-  <%= f.submit "登録する", label:@label  %>
-  </div>
-  <% end %>
-</div> 
+<%= render 'form', label: @label %>
 
 <%= link_to '戻る', labels_path %>

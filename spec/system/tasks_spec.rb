@@ -11,6 +11,8 @@ RSpec.describe 'タスク管理機能', type: :system do
     let!(:first_task) { FactoryBot.create(:task, title: 'first_task', content: 'first_task', priority: :high, status: :not_started, created_at: 1.day.ago, user: user)}
     let!(:second_task) { FactoryBot.create(:second_task, title: 'second_task',  content: '2番目のタスク説明', status: :started, created_at:1.hour.ago, user: user)}
     let!(:third_task) { FactoryBot.create(:third_task, title: 'third_task', content: '3番目のタスク説明', status: :completed, created_at:1.minute.ago, user: user)}
+    let!(:label) { FactoryBot.create(:label, name: 'test_label', user: user ) }  
+
 
    # 「一覧画面に遷移した場合」や「タスクが作成日時の降順に並んでいる場合」など、contextが実行されるタイミングで、before内のコードが実行される
     before do
@@ -21,6 +23,17 @@ RSpec.describe 'タスク管理機能', type: :system do
     click_button 'ログイン'
     visit tasks_path
     end
+
+  describe 'ラベルでの検索機能'
+    context 'ラベルで検索をした場合' do
+      it 'そのラベルの付いたタスクがすべて表示される' do
+        select 'テストラベル', from: 'ラベル'
+        click_button '検索'
+        expect(page).to have_content 'タスク2'
+        expect(page).not_to have_content 'タスク1'
+      end
+    end
+  end    
 
   context '一覧画面に遷移した場合' do
     #  it '作成済みのタスク一覧が表示される' do
@@ -142,4 +155,3 @@ RSpec.describe 'タスク管理機能', type: :system do
       end
     end
   end
-end

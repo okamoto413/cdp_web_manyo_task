@@ -10,8 +10,9 @@ class LabelsController < ApplicationController
   end
 
   def create
-    @user = current_user
-     @label = @user.labels.build(label_params)
+    # @user = current_user
+    # @label = @user.labels.build(label_params)
+    @label = current_user.labels.build(label_params) 
     if @label.save
       flash[:success] = "ラベルを登録しました"
       #登録された場合、ラベル一覧画面へ遷移する
@@ -22,11 +23,10 @@ class LabelsController < ApplicationController
   end
 
   def edit
-    @label = Label.find(params[:id])
   end
 
   def update
-      @label = Label.find(params[:id])
+      # @label = Label.find(params[:id])
     if @label.update(label_params)
       flash[:notice]= "ラベルを更新しました"
       redirect_to labels_path
@@ -36,7 +36,7 @@ class LabelsController < ApplicationController
   end  
   
   def destroy
-    @label = Label.find(params[:id])
+    # @label = Label.find(params[:id])
     @label.destroy
     flash[:success] = "ラベルを削除しました"
     redirect_to labels_path
@@ -44,7 +44,7 @@ class LabelsController < ApplicationController
 
   private
   def set_label 
-    @label = Label.find(params[:id])
+    @label = current_user.labels.find(params[:id])
   end
 
   def label_params
