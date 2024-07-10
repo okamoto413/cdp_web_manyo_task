@@ -20,16 +20,16 @@ ActiveRecord::Schema.define(version: 2024_07_08_091106) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_id", null: false
-    t.index ["name"], name: "index_labels_on_name", unique: true
     t.index ["user_id"], name: "index_labels_on_user_id"
   end
 
   create_table "task_labels", force: :cascade do |t|
-    t.bigint "task_id"
-    t.bigint "label_id"
+    t.bigint "task_id", null: false
+    t.bigint "label_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["label_id"], name: "index_task_labels_on_label_id"
+    t.index ["task_id", "label_id"], name: "index_task_labels_on_task_id_and_label_id", unique: true
     t.index ["task_id"], name: "index_task_labels_on_task_id"
   end
 
@@ -58,4 +58,6 @@ ActiveRecord::Schema.define(version: 2024_07_08_091106) do
   end
 
   add_foreign_key "labels", "users"
+  add_foreign_key "task_labels", "labels"
+  add_foreign_key "task_labels", "tasks"
 end
