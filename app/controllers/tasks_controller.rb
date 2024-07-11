@@ -12,7 +12,6 @@ class TasksController < ApplicationController
     if params[:sort_deadline_on]
       @tasks = Task.sorted_by_deadline
     elsif params[:sort_priority]
-      # @tasks = Task.sorted_by_priority
       @tasks =Task.sorted_by_priority.order(priority: :desc, created_at: :desc)
     end  
     
@@ -25,11 +24,16 @@ class TasksController < ApplicationController
       elsif search_params[:status].present?
         @tasks = @tasks.search_status(search_params[:status])  
       elsif search_params[:label].present?
-        label = current_user.labels.find(params[:label])
-        @tasks = labels.tasks
+        label = current_user.labels.find_by(params[:label])
+        if label
+          @tasks = label.tasks
+        else
+          @tasks = Task.none
+        end  
       end
     end
     @tasks = @tasks.page(params[:page]).per(10)
+    @labels = current_user.labels
   end
 
   def show

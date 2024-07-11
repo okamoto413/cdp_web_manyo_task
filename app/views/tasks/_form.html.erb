@@ -33,16 +33,10 @@
   </div>
   
   <!-- ラベルのチェックボックス -->
-  <div class="field">
+  <div class="form-group">
    <p><%= form.label :label_ids, "ラベル" %></p>
-    <% Label.all.each do |label| %>
-      <div class="checkbox">  
-      <%= form.check_box :label_ids, { multiple: true, include_hidden: false }, label.id, nil %>
-      <%= label.name %>
+      <%= form.collection_select :label_ids, current_user.labels, :id, :name, {}, { multiple: true, class: 'form-control' } %>
     </div>
-    <% end %>
-  </div>  
-  
 
   
 <!-- アプリケーションの国際化 -->
