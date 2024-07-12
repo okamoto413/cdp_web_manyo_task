@@ -17,21 +17,25 @@ class TasksController < ApplicationController
     
     if params[:search].present?
       search_params = params[:search]
+
       if search_params[:title].present? && search_params[:status].present?
         @tasks = @tasks.search_status(search_params[:status]).search_title_like(search_params[:title])
       elsif search_params[:title].present?  
         @tasks = @tasks.search_title_like(search_params[:title])
       elsif search_params[:status].present?
-        @tasks = @tasks.search_status(search_params[:status])  
-      elsif search_params[:label].present?
-        label = current_user.labels.find_by(params[:label])
+        @tasks = @tasks.search_status(search_params[:status]) 
+      end  
+        
+      if search_params[:label].present?
+        label = current_user.labels.find_by(id: search_params[:label])
         if label
-          @tasks = label.tasks
+          @tasks = @tasks.joins(:labels).where(labels: { id: label.id})
         else
           @tasks = Task.none
         end  
       end
     end
+
     @tasks = @tasks.page(params[:page]).per(10)
     @labels = current_user.labels
   end

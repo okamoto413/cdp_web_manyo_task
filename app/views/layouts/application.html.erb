@@ -18,32 +18,32 @@
     <header>
       <nav class= "navbar navbar-expand-lg navbar-light bg-light">
         <a class= "navbar-brand" href="#">CdpWebManyoTask</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-        <ul class="navbar-nav">
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
 
         <% if logged_in? %>
           <% if current_user.admin? %> <%# 管理者か一般ユーザーかを確認 %>
             <!-- 管理者の場合のリンク -->
-            <li class="nav-item"><%= link_to "ユーザ一覧", admin_users_path, id:"users-index", class: "nav-link" %></li>
-            <li class="nav-item"><%= link_to "ユーザを登録する", new_admin_user_path, id:"add-user", class: "nav-link", data: { turbolinks: false } %></li>
+            <%= link_to "ユーザ一覧", admin_users_path, id:"users-index",class: 'nav-item nav-link' %>
+            <%= link_to "ユーザを登録する", new_admin_user_path, id:"add-user",class: 'nav-item nav-link', data: { turbolinks: false } %>
           <% end %>
 
           <!-- 共通のリンク -->
-          <li class="nav-item"> <%= link_to t("global_navigation.tasks_index_link"), tasks_path, id:'tasks-index', class: "nav-link" %> </li>
-          <li class="nav-item"><%= link_to t("global_navigation.new_task"), new_task_path, id:'new-task', class: "nav-link" %></li>
-          <li class="nav-item"><%= link_to "ラベル一覧", labels_path, id:"labels-index", class: "nav-link" %></li>
-          <li class="nav-item"><%= link_to "ラベルを登録する", new_label_path, id:"new-label", class: "nav-link" %></li>
-          <li class="nav-item"><%= link_to "アカウント設定", user_path(current_user), id:"account-setting" , class: "nav-link"%></li>
-          <li class="nav-item"><%= link_to "ログアウト", session_path(current_user.id), method: :delete, id:"sign-out" , class: "nav-link"%></li>
+           <%= link_to t("global_navigation.tasks_index_link"), tasks_path, id:'tasks-index',class: 'nav-item nav-link' %> 
+          <%= link_to t("global_navigation.new_task"), new_task_path, id:'new-task',class: 'nav-item nav-link' %>
+          <%= link_to "ラベル一覧", labels_path, id:"labels-index",class: 'nav-item nav-link' %>
+          <%= link_to "ラベルを登録する", new_label_path, id:"new-label",class: 'nav-item nav-link' %>
+          <%= link_to "アカウント設定", user_path(current_user), id:"account-setting" ,class: 'nav-item nav-link'%>
+          <%= link_to "ログアウト", session_path(current_user.id), method: :delete, id:"sign-out" ,class: 'nav-item nav-link'%>
         <% else %>
          <!-- ログインしていない場合のリンク -->
-          <li class="nav-item"><%= link_to "アカウント登録", new_user_path, id:"sign-up", class: "nav-link"%></li>
-          <li class="nav-item"><%= link_to "ログイン", new_session_path, id:"sign-in", class: "nav-link" %></li>
+          <%= link_to "アカウント登録", new_user_path, id:"sign-up",class: 'nav-item nav-link'%>
+          <%= link_to "ログイン", new_session_path, id:"sign-in",class: 'nav-item nav-link' %>
         <% end %>
-        </ul>
+        </div>
       </nav>
     </header>
  <!-- フラッシュメッセージ -->

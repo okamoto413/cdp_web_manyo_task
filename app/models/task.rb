@@ -35,6 +35,9 @@ class Task < ApplicationRecord
   #作成日時の新しい順に並び替えるロジックをTaskモデルに移す
   scope :recently_created, -> { order(created_at: :desc) } 
 
+  #ラベル検索
+  scope :with_label, ->(label_id) { joins(:labels).where(labels: {id: label_id}) }
+
   #検索ロジックをtasksコントローラからTaskモデルに移す
   def self.search(params)
     tasks = Task.all
