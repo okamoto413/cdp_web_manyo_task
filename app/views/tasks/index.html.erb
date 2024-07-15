@@ -5,29 +5,32 @@
 
 <%# 検索機能 %>
   <%= form_with url: tasks_path, scope: :search, method: :get, local: true do |form| %>
-    <div>
+    <div class="form-row">
+    <div class="form-group col-md-4">
       <%= form.label :statuses, t("tasks_index.table_thead.status") %>
-      <%= form.select :status,
+        <%= form.select :status,
         options_for_select([["", ""]]+Task.statuses.map { |status, _| [t("tasks_index.statuses.#{status}"), status]},
         include_blank: true) %>
     </div>
     
-    <div>
+    <div class="form-group col-md-3">
       <%= form.label :title,"タイトル" %>
       <%= form.text_field :title%>
     </div> 
 
-    <div class= "form-group">
+    <div class="form-group col-md-3">
       <%= form.label :label, 'ラベル' %>
       <%= form.select :label, options_from_collection_for_select(current_user.labels, 'id', 'name'), include_blank:true, class: 'form-control' %>
     </div>
 
-    <div class= "form-group">
-      <%= form.submit t("tasks_index.search_button_text"), class: "submit-btn", id:"search_task" %>
+     <ul class="navbar-nav ml-auto">
+    <div class="form-group col-md-3 align-self-end">
+      <%= form.submit t("tasks_index.search_button_text"), class: "btn btn-primary btn-block", id:"search_task" %>
     </div>
   <% end %>
 
-<table>
+<table class = "table">
+ <caption>List of users</caption>
 <thead>
     <tr>
       <th><%= t("tasks_index.table_thead.title") %></th>
@@ -50,10 +53,10 @@
         <td class="task_deadline"><%= task.deadline_on %></td>
         <td class = "task_priority"><%= t("tasks_index.priorities.#{task.priority}") %></td>
         <td><%= t("tasks_index.statuses.#{task.status}") %></td>
-        <td><%= link_to t("tasks_index.table_thead.Show"), task_path(task.id), class:'show-task' %></td>
-        <td><%= link_to t("tasks_index.table_thead.Edit"), edit_task_path(task.id), class:'edit-task' %></td>
+        <td><%= link_to t("tasks_index.table_thead.Show"), task_path(task.id), class:'show-task btn btn-primary text-white'  %></td>
+        <td><%= link_to t("tasks_index.table_thead.Edit"), edit_task_path(task.id), class:'edit-task btn btn-primary text-white'  %></td>
         <td><%= link_to t("tasks_index.table_thead.Destroy"), task_path(task.id), method: 'delete', 
-        data: { confirm: t("tasks_index.table_thead.delete_confirm") } , class:'destroy-task'%></td>
+        data: { confirm: t("tasks_index.table_thead.delete_confirm") } , class:'destroy-task btn btn-danger text-white'%></td>
       </tr>
         <% end %>
   </tbody>
