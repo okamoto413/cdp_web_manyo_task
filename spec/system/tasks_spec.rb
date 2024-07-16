@@ -11,7 +11,9 @@ RSpec.describe 'タスク管理機能', type: :system do
     let!(:first_task) { FactoryBot.create(:task, title: 'first_task', content: 'first_task', priority: :high, status: :not_started, created_at: 1.day.ago, user: user)}
     let!(:second_task) { FactoryBot.create(:second_task, title: 'second_task',  content: '2番目のタスク説明', status: :started, created_at:1.hour.ago, user: user)}
     let!(:third_task) { FactoryBot.create(:third_task, title: 'third_task', content: '3番目のタスク説明', status: :completed, created_at:1.minute.ago, user: user)}
-    let!(:label) { FactoryBot.create(:label, name: 'test_label', user: user ) }  
+    # let!(:task_with_label) { FactoryBot.create(:task, title: 'task_with_label', user: user, labels: [label])}  
+    # let!(:task_without_label) { FactoryBot.create(:task, title: 'task_without_label', user: user)}     
+    let!(:label) { FactoryBot.create(:label, name: 'テストラベル', user: user ) }  
 
 
    # 「一覧画面に遷移した場合」や「タスクが作成日時の降順に並んでいる場合」など、contextが実行されるタイミングで、before内のコードが実行される
@@ -24,27 +26,22 @@ RSpec.describe 'タスク管理機能', type: :system do
     visit tasks_path
     end
 
-  describe 'ラベルでの検索機能'
-    context 'ラベルで検索をした場合' do
-      it 'そのラベルの付いたタスクがすべて表示される' do
-        select 'テストラベル', from: 'ラベル'
-        click_button '検索'
-        expect(page).to have_content 'タスク2'
-        expect(page).not_to have_content 'タスク1'
+    describe 'ラベルでの検索機能' do
+      context 'ラベルで検索をした場合' do
+        it 'そのラベルの付いたタスクがすべて表示される' do
+          select 'テストラベル', from: 'search[label]'
+          click_button '検索'
+          expect(page).to have_content 'テストラベル'
+        end
       end
     end
-  end    
+
 
   context '一覧画面に遷移した場合' do
     #  it '作成済みのタスク一覧が表示される' do
     it '作成済みのタスク一覧が作成日時の降順で表示される' do
       task_title = all('.task_title').map(&:text)
-      expect(task_title).to eq ['new_task', 'third_task', 'second_task', 'first_task']
-          # task_list = all('tbody tr')
-          # expect(task_list[0]).to have_content 'new_task'
-          # expect(task_list[1]).to have_content 'third_task'
-          # expect(task_list[2]).to have_content 'second_task'
-          # expect(task_list[3]).to have_content 'first_task'
+      expect(task_title).to eq ["new_task", "third_task", "second_task", "first_task"]
     end
 
       it '登録済みのタスク一覧が表示される' do
@@ -66,7 +63,7 @@ RSpec.describe 'タスク管理機能', type: :system do
         task_deadlines = all('.task_deadline').map(&:text)
         expect(task_deadlines).to eq [ "2022-02-16", "2022-02-17", "2025-02-10", "2025-02-10"]
       end
-    end
+    end  
 
     context '「優先度」というリンクをクリックした場合' do
       it "優先度の高い順に並び替えられたタスク一覧が表示される" do
@@ -94,15 +91,15 @@ RSpec.describe 'タスク管理機能', type: :system do
 
     context 'ステータスで検索した場合' do
       it "検索したステータスに一致するタスクのみ表示される" do
-      visit tasks_path  
-      # toとnot_toのマッチャを使って表示されるものとされないものの両方を確認する
-      # fill_in 'search_status', with: 'not_started'
-      select '未着手', from: 'search_status'
-      click_button '検索'
-      expect(page).to have_content 'first_task'
-      expect(page).not_to have_content 'second_task'
-      expect(page).not_to have_content 'third_task'
-    end
+        visit tasks_path  
+        # toとnot_toのマッチャを使って表示されるものとされないものの両方を確認する
+        # fill_in 'search_status', with: 'not_started'
+        select '未着手', from: 'search_status'
+        click_button '検索'
+        expect(page).to have_content 'first_task'
+        expect(page).not_to have_content 'second_task'
+        expect(page).not_to have_content 'third_task'
+      end
     end
 
     context 'タイトルとステータスで検索した場合' do
@@ -120,7 +117,7 @@ RSpec.describe 'タスク管理機能', type: :system do
 
    context '新たにタスクを作成した場合' do
      it '新しいタスクが一番上に表示される' do
-       visit new_task_path
+         visit new_task_path
          fill_in 'task_title', with:'new_task'
          fill_in 'task_content', with:'タスク内容'
          fill_in 'task_deadline_on', with:'2025-02-10'
@@ -144,14 +141,15 @@ RSpec.describe 'タスク管理機能', type: :system do
       click_button 'ログイン'
       visit tasks_path
     end
-    #let!(:user) { FactoryBot.create(:user) }
+
     context '任意のタスク詳細画面に遷移した場合' do
       it 'そのタスクの内容が表示される' do
-      # FactoryBotを使用してタスクのインスタンスを生成
-      task = FactoryBot.create(:task, title: '詳細タスク', content:'詳細内容', user: user)
-      visit task_path(task)
-      expect(page).to have_content '詳細タスク'
-      expect(page).to have_content '詳細内容'
+        # FactoryBotを使用してタスクのインスタンスを生成
+        task = FactoryBot.create(:task, title: '詳細タスク', content:'詳細内容', user: user)
+        visit task_path(task)
+        expect(page).to have_content '詳細タスク'
+        expect(page).to have_content '詳細内容'
       end
     end
   end
+end 

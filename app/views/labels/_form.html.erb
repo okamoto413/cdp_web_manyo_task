@@ -18,6 +18,9 @@
     <%= f.text_field :name %>
   </div>
 
+    <!-- タスクに紐づいているラベル名をすべて表示させる -->
+  <%= f.hidden_field :user_id, value: current_user.id %>
+
   <div class="actions">
     <%= f.submit %>
   </div>

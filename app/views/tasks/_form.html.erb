@@ -4,17 +4,17 @@
 
   <div class="field">
    <p><%= form.label :title, t("new_task.form_labels.title") %></p>
-    <%= form.text_field :title %>
+    <%= form.text_field :title, class: 'form-control' %>
   </div>
 
   <div class="field">
    <p><%= form.label :content, t("new_task.form_labels.content") %></p>
-    <%= form.text_area :content %>
+    <%= form.text_area :content, class: 'form-control' %>
   </div>
 <!-- 終了期限 追記-->
   <div class="field">
    <p><%= form.label :deadline_on, t("new_task.form_labels.deadline_on") %></p>
-    <%= form.date_field :deadline_on %>
+    <%= form.date_field :deadline_on, class: 'form-control' %>
   </div>
 
 <!-- 優先度 追記-->
@@ -22,14 +22,14 @@
    <p><%= form.label :priority, t("new_task.form_labels.priority") %></p>
     <%= form.select :priority,
      options_for_select([]+Task.priorities.keys.map { |k| [t("new_task.priorities.#{k}"), k] }), 
-      { include_blank: true } %>
+      { include_blank: true } , class: 'form-control'%>
   </div>
 
 <!-- ステータス 追記  ステータスの検索フォームのデフォルト値は空欄-->
   <div class="field">
    <p><%= form.label :status, t("new_task.form_labels.status") %></p>
   <%= form.select :status, 
-    options_for_select([]+Task.statuses.keys.map { |k| [t("new_task.statuses.#{k}"), k] }), { include_blank: true } %>
+    options_for_select([]+Task.statuses.keys.map { |k| [t("new_task.statuses.#{k}"), k] }), { include_blank: true } , class: 'form-control' %>
   </div>
   
   <!-- ラベルのforチェックボックス -->
@@ -43,10 +43,13 @@
     <% end %>
   
 <!-- アプリケーションの国際化 -->
+  <ul class="navbar-nav ml-auto">
+  <div class="form-group col-md-2 align-self-end">
    <%if task.new_record? %>
-   <%= form.submit t("new_task.create_button"), id:'create-task' %>
+   <%= form.submit t("new_task.create_button"), class: "btn btn-primary btn-block", id:'create-task' %>
    <% else %>
-   <%= form.submit t("edit_task.update_button"), id:'update-task' %>
+   <%= form.submit t("edit_task.update_button"), class: "btn btn-primary btn-block", id:'update-task' %>
+   </div>
    <% end %>
  
 <% if @task.errors.any? %>

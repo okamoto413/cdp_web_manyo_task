@@ -1,6 +1,6 @@
 class Task < ApplicationRecord
   belongs_to :user
-  has_many :task_labels
+  has_many :task_labels, dependent: :destroy
   has_many :labels, through: :task_labels
 #親モデルをTaskモデルとし、子モデルをTaskLabelモデル(中間テーブル)とする
 #親モデルのフォームより子モデルを削除できる
