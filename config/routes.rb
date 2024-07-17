@@ -28,4 +28,7 @@ Rails.application.routes.draw do
   # エラーページ
   match "/404", to: "errors#not_found", via: :all
   match "/405", to: "errors#internal_server_error", via: :all
+
+  get 'test_500', to: 'application#test_500'
+
 end
