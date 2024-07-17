@@ -2,6 +2,10 @@ class ApplicationController < ActionController::Base
   include SessionsHelper
   before_action :login_required
 
+  def test_500
+    raise "Intentional 500 Error"
+  end
+
   private
   def login_required
     unless current_user #ログインをせずにログイン画面とアカウント登録画面以外にアクセスした場合、ログインページに遷移させ「ログインしてください」というフラッシュメッセージを表示させること

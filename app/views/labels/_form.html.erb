@@ -1,0 +1,27 @@
+<!-- app/views/labels/_form.html.erb -->
+<%= form_with(model: label, local: true) do |f| %>
+
+<% if @label.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@label.errors.count, "error") %>が原因でこの記事を保存できませんでした</h2>
+  
+    <ul>
+        <% @label.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name, '名前', id: 'name-label' %>
+    <%= f.text_field :name %>
+  </div>
+
+    <!-- タスクに紐づいているラベル名をすべて表示させる -->
+  <%= f.hidden_field :user_id, value: current_user.id %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

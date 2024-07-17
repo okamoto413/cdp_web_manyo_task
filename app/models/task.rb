@@ -1,5 +1,10 @@
 class Task < ApplicationRecord
   belongs_to :user
+  has_many :task_labels, dependent: :destroy
+  has_many :labels, through: :task_labels
+#親モデルをTaskモデルとし、子モデルをTaskLabelモデル(中間テーブル)とする
+#親モデルのフォームより子モデルを削除できる
+  accepts_nested_attributes_for :task_labels, allow_destroy: true
 
   # バリデーションに失敗した場合、タイトルが未入力の場合	"Title can’t be blank"とバリデーションメッセージを表示させる。
   validates :title, presence:true
@@ -29,6 +34,9 @@ class Task < ApplicationRecord
   scope :title_like, ->(title) { where('title LIKE ?', "%#{title}%")}
   #作成日時の新しい順に並び替えるロジックをTaskモデルに移す
   scope :recently_created, -> { order(created_at: :desc) } 
+
+  #ラベル検索
+  scope :with_label, ->(label_id) { joins(:labels).where(labels: {id: label_id}) }
 
   #検索ロジックをtasksコントローラからTaskモデルに移す
   def self.search(params)

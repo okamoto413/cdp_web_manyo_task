@@ -25,12 +25,20 @@
       <th><%= t("show_task.item_labels.priority") %> :</th>
       <td><%=  t("tasks_index.priorities.#{@task.priority}") %></td>
     </tr>
+
+ <!-- ラベル追記 -->  
+ <!-- タスクに紐づいているラベルの表示 -->
     <tr>
-      <th><%= t("show_task.item_labels.status") %> :</th>
-      <td><%= t("tasks_index.statuses.#{@task.status}") %></td>
+      <th><%= t("show_task.item_labels.labels") %> :</th>
+      <td>
+        <% @task.labels.each_with_index do |label,index| %>
+          <%= label.name %>
+          <% unless index == @task.labels.size - 1 %>, <% end %>
+        <% end %>
+      </td>
     </tr>
   </tbody>
  </table>
 
-  <%= link_to t("show_task.edit_link"), edit_task_path(@task.id), id:'edit-task' %> 
+  <%= link_to t("show_task.edit_link"), edit_task_path(@task), id:'edit-task' %> 
   <%= link_to t("show_task.back_to_tasks_index_link"), tasks_path, id:'back'%>

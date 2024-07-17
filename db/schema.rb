@@ -10,10 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_06_13_044516) do
+ActiveRecord::Schema.define(version: 2024_07_08_091106) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "labels", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_labels_on_user_id"
+  end
+
+  create_table "task_labels", force: :cascade do |t|
+    t.bigint "task_id", null: false
+    t.bigint "label_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["label_id"], name: "index_task_labels_on_label_id"
+    t.index ["task_id", "label_id"], name: "index_task_labels_on_task_id_and_label_id", unique: true
+    t.index ["task_id"], name: "index_task_labels_on_task_id"
+  end
 
   create_table "tasks", force: :cascade do |t|
     t.string "title", null: false
@@ -39,4 +57,7 @@ ActiveRecord::Schema.define(version: 2024_06_13_044516) do
     t.index ["name"], name: "index_users_on_name"
   end
 
+  add_foreign_key "labels", "users"
+  add_foreign_key "task_labels", "labels"
+  add_foreign_key "task_labels", "tasks"
 end
